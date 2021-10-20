@@ -33,6 +33,6 @@ title: Proposal
 
 ## 4. Appointment with the Instructor
 
-#### TBA
+#### 3:15pm - 3:30pm, Tuesday, October 26, 2021
 
 
