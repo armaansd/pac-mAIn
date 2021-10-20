@@ -6,11 +6,8 @@ title:  Team
 # {{ page.title }}
 
 
-## USER 1
-***UCI Net ID***: ucinetid1
+## Armaan Danewalia
+***UCI Net ID***: adanewal
 
-## USER 2
-***UCI Net ID***: ucinetid2
-
-## USER 3
-***UCI Net ID***: ucinetid3
+## Presley Lin
+***UCI Net ID***: presleyl
