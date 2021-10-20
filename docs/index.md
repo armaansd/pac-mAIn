@@ -3,7 +3,6 @@ layout: default
 title:  Home
 ---
 
-Source code: https://github.com/armaansd/pac-main
 
 PROJECT SUMMARY
 
@@ -14,6 +13,9 @@ Reports:
 - [Proposal](proposal.html)
 - [Status](status.html)
 - [Final](final.html)
+
+Source code: https://github.com/armaansd/pac-main
+
 
 ![image](https://user-images.githubusercontent.com/75513952/138030559-b204cd0b-ddb9-435c-b90d-8a80f92217f0.png)
 
