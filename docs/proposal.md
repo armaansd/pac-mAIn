@@ -6,7 +6,7 @@ title: Proposal
 ![image](https://user-images.githubusercontent.com/75513952/138029586-91aba8ae-47cb-4680-a669-72810dc42a33.png)
 
 
-1. Project Summary
+1.<font size="10">  Project Summary</font> 
    
     Pac-Man is action maze game where the player navigates through a maze to collect pellets in order to score points. The player does this while evading enemies located in the maze. The goal of our project is to train an agent to play a Minecraft recreation of the game. The recreation will be similar to the original game, except it will be watered down. The goal of our agent is to be able to collect most or all of the pellets while having the minimum amount of deaths per run (3 or less). The agent will also need to learn to avoid enemies. The input to our agent could be the map of the maze and the items and enemies within the maze. The output of our agent will be the movement list the agent will perform. 
    
