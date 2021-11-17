@@ -369,7 +369,6 @@ class Pacman(gym.Env):
                 grid = observations['itemAll']
                 print(grid)
                 for item in grid:
-                    # Index is in relation to the agent, so we adjust it in relation to the agent
                     index = self.obs_size * self.obs_size // 2 + (int)(item['x'] - grid[0]['x']) + (int)(item['z'] - grid[0]['z']) * self.obs_size
                     if(item['name'] == 'diamond'):
                         obs[index] = 1
