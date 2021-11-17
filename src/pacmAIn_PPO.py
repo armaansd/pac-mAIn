@@ -138,7 +138,7 @@ class Pacman(gym.Env):
         self.runs = 0
         self.size = 20
         self.diamonds_collected = 0
-        self.obs_size = 10
+        self.obs_size = 5
         self.max_episode_steps = 500
         self.log_frequency = 10
         self.action_dict = {
@@ -294,7 +294,7 @@ class Pacman(gym.Env):
                             <ObservationFromFullStats/>
                             <ObservationFromRay/>
                              <ObservationFromNearbyEntities>
-                                <Range name="itemAll" xrange='10' yrange='2' zrange='10' />                                
+                                <Range name="itemAll" xrange='5' yrange='2' zrange='5' />                                
                             </ObservationFromNearbyEntities>
                             <RewardForCollectingItem>
                                 <Item reward="1" type="diamond"/>
@@ -369,6 +369,7 @@ class Pacman(gym.Env):
                 grid = observations['itemAll']
                 print(grid)
                 for item in grid:
+                    # Index is in relation to the agent, so we adjust it in relation to the agent
                     index = self.obs_size * self.obs_size // 2 + (int)(item['x'] - grid[0]['x']) + (int)(item['z'] - grid[0]['z']) * self.obs_size
                     if(item['name'] == 'diamond'):
                         obs[index] = 1
