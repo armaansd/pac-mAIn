@@ -138,7 +138,7 @@ class Pacman(gym.Env):
         self.runs = 0
         self.size = 20
         self.diamonds_collected = 0
-        self.obs_size = 5
+        self.obs_size = 10
         self.max_episode_steps = 500
         self.log_frequency = 10
         self.action_dict = {
@@ -294,7 +294,7 @@ class Pacman(gym.Env):
                             <ObservationFromFullStats/>
                             <ObservationFromRay/>
                              <ObservationFromNearbyEntities>
-                                <Range name="itemAll" xrange='5' yrange='2' zrange='5' />                                
+                                <Range name="itemAll" xrange='10' yrange='2' zrange='10' />                                
                             </ObservationFromNearbyEntities>
                             <RewardForCollectingItem>
                                 <Item reward="1" type="diamond"/>
