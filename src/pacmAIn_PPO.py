@@ -164,7 +164,8 @@ class Pacman(gym.Env):
         # Pacman Parameters
         self.obs = None
         self.allow_break_action = False
-        self.episode_step = 0
+        self.episode_step = 0  # Steps in the episode
+        self.steps_taken = 0   # Steps agent took to find the solution
         self.episode_return = 0
         self.episode_number = 0
         self.diamonds_collected = 0
@@ -186,13 +187,14 @@ class Pacman(gym.Env):
         # Reset Variables
         self.returns.append(self.episode_return)
         current_step = self.steps[-1] if len(self.steps) > 0 else 0
-        self.steps.append(current_step + self.episode_step)
+        self.steps.append(current_step + self.steps_taken)
 
-        self.episode_step_arr.append(self.episode_step)
+        self.episode_step_arr.append(self.steps_taken)
         self.episode_arr.append(self.episode_number)
 
         self.episode_return = 0
         self.episode_step = 0
+        self.steps_taken = 0
         self.diamonds_collected = 0
         self.episode_number+= 1
 
@@ -228,6 +230,7 @@ class Pacman(gym.Env):
         self.agent_host.sendCommand(command)
         time.sleep(.2)
         self.episode_step += 1
+        self.steps_taken += 1
 
         # Get Observation
         world_state = self.agent_host.getWorldState()
@@ -245,12 +248,15 @@ class Pacman(gym.Env):
         self.episode_return += reward
         self.diamonds_collected = self.episode_return
 
-        print("Step " + str(self.episode_step) + "\nreward gained: " + str(self.episode_return) + "\n")
+        print()
+        print("Episode Step " + str(self.episode_step) + "  Actual Step: " + str(self.steps_taken))
+        print("Rewards gained: {}".format(self.episode_return))
+        print()
 
         if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds 
             print("Collected all diamonds!\n")
-            print("Steps taken: {}\n".format(self.episode_step))
-            done = True
+            print("Steps taken: {}\n".format(self.steps_taken))
+            self.episode_step = self.max_episode_steps - 1 # To end the mission set steps to the max
 
         return self.obs, reward, done, dict()
 
@@ -263,7 +269,7 @@ class Pacman(gym.Env):
                 <Mission xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
                     <About>
-                        <Summary>Diamond Collector</Summary>
+                        <Summary>Pacman</Summary>
                     </About>
 
                     <ServerSection>
@@ -293,7 +299,7 @@ class Pacman(gym.Env):
                     </ServerSection>
 
                     <AgentSection mode="Survival">
-                        <Name>CS175DiamondCollector</Name>
+                        <Name>CS175Pacman</Name>
                         <AgentStart>
                             <Placement x="-0.5" y="2" z="-14.5" pitch="45" yaw="0"/>
                             <Inventory>
@@ -324,7 +330,7 @@ class Pacman(gym.Env):
         """
         my_mission = MalmoPython.MissionSpec(self.get_mission_xml(), True)
         my_mission_record = MalmoPython.MissionRecordSpec()
-        my_mission.requestVideo(1000, 700)
+        my_mission.requestVideo(1200, 900)
         my_mission.setViewpoint(1)
 
         max_retries = 3
@@ -333,7 +339,7 @@ class Pacman(gym.Env):
 
         for retry in range(max_retries):
             try:
-                self.agent_host.startMission( my_mission, my_clients, my_mission_record, 0, 'DiamondCollector' )
+                self.agent_host.startMission( my_mission, my_clients, my_mission_record, 0, 'Pacman' )
                 break
             except RuntimeError as e:
                 if retry == max_retries - 1:
@@ -478,4 +484,3 @@ if __name__ == '__main__':
             print("checkpoint saved")   
             print(checkpoint_path)
         i += 1
-
