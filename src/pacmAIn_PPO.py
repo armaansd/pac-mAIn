@@ -18,6 +18,7 @@ except:
 import sys
 import time
 import json
+from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.random import randint
@@ -137,7 +138,6 @@ class Pacman(gym.Env):
         # Static Parameters
         self.runs = 0
         self.size = 20
-        self.diamonds_collected = 0
         self.obs_size = 5
         self.max_episode_steps = 500
         self.log_frequency = 10
@@ -146,7 +146,6 @@ class Pacman(gym.Env):
             1: 'turn 1',  # Turn 90 degrees to the right
             2: 'turn -1',  # Turn 90 degrees to the left
         }
-
 
         # Rllib Parameters
         self.action_space = Discrete(len(self.action_dict))
@@ -162,13 +161,17 @@ class Pacman(gym.Env):
             print(self.agent_host.getUsage())
             exit(1)
 
-        # DiamondCollector Parameters
+        # Pacman Parameters
         self.obs = None
         self.allow_break_action = False
         self.episode_step = 0
         self.episode_return = 0
+        self.episode_number = 0
+        self.diamonds_collected = 0
         self.returns = []
         self.steps = []
+        self.episode_step_arr = []
+        self.episode_arr = []
 
     def reset(self):
         """
@@ -184,13 +187,21 @@ class Pacman(gym.Env):
         self.returns.append(self.episode_return)
         current_step = self.steps[-1] if len(self.steps) > 0 else 0
         self.steps.append(current_step + self.episode_step)
+
+        self.episode_step_arr.append(self.episode_step)
+        self.episode_arr.append(self.episode_number)
+
         self.episode_return = 0
         self.episode_step = 0
+        self.diamonds_collected = 0
+        self.episode_number+= 1
 
         # Log
         if len(self.returns) > self.log_frequency + 1 and \
             len(self.returns) % self.log_frequency == 0:
             self.log_returns()
+            self.log_steps()
+            self.log_rewards_per_episode()
 
         # Get Observation
         self.obs, self.allow_break_action = self.get_observation(world_state)
@@ -236,10 +247,10 @@ class Pacman(gym.Env):
 
         print("Step " + str(self.episode_step) + "\nreward gained: " + str(self.episode_return) + "\n")
 
-        if(self.diamonds_collected == 52):
+        if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds 
             print("Collected all diamonds!\n")
             print("Steps taken: {}\n".format(self.episode_step))
-            self.agent_host.sendCommand("quit")
+            done = True
 
         return self.obs, reward, done, dict()
 
@@ -367,13 +378,13 @@ class Pacman(gym.Env):
 
                 # Get observation
                 grid = observations['itemAll']
-                print(grid)
+                #print(grid)
                 for item in grid:
                     index = (int)(self.obs_size * self.obs_size/2) + (int)(item['x'] - grid[0]['x']) + (int)(item['z'] - grid[0]['z']) * self.obs_size
                     if(item['name'] == 'diamond'):
                         obs[index] = 1
 
-                print(obs)
+                #print(obs)
 
                 # Rotate observation with orientation of agent
                 obs = obs.reshape((2, self.obs_size, self.obs_size))
@@ -402,17 +413,53 @@ class Pacman(gym.Env):
         returns_smooth = np.convolve(self.returns[1:], box, mode='same')
         plt.clf()
         plt.plot(self.steps[1:], returns_smooth)
-        plt.title('Pacman')
-        plt.ylabel('Diamonds Collected')
+        plt.title('Pacman: Total Steps v. Returns')
+        plt.ylabel('Returns')
         plt.xlabel('Steps')
-        plt.savefig('pacman{}.png'.format(self.runs))
+        plt.savefig('pacman_returns.png')
 
-        with open('pacman{}.txt'.format(self.runs), 'w') as f:
+        with open('pacman_returns.txt', 'w') as f:
             for step, value in zip(self.steps[1:], self.returns[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
 
         self.runs = self.runs + 1
         print("Run number: {}".format(self.runs))
+    
+    # Graph of episode number vs the amount of steps
+    # Used to compare how many steps agent took per episode
+    def log_steps(self):
+
+        box = np.ones(self.log_frequency) / self.log_frequency
+        episode_smooth = np.convolve(self.episode_step_arr[1:], box, mode='same')
+        plt.clf()
+        plt.plot(self.episode_arr[1:], episode_smooth)
+        plt.title('Pacman: Episodes v. Steps')
+        plt.ylabel('Steps Taken')
+        plt.xlabel('Episode No.')
+        plt.savefig('pacman_steps.png')
+
+        with open('pacman_steps.txt', 'w') as f:
+            for step, value in zip(self.episode_arr[1:], self.episode_step_arr[1:]):
+                f.write("{}\t{}\n".format(step, value)) 
+    
+    # Graph of episode number vs the amount of reward collected
+    # Used to compare how many rewards agent received per episode
+    def log_rewards_per_episode(self):
+
+        box = np.ones(self.log_frequency) / self.log_frequency
+        returns_smooth = np.convolve(self.returns[1:], box, mode='same')
+        plt.clf()
+        plt.plot(self.episode_arr[1:], returns_smooth)
+        plt.title('Pacman: Episodes v. Reward')
+        plt.ylabel('Returns')
+        plt.xlabel('Episode No.')
+        plt.savefig('pacman_rewards_per_episode.png')
+
+        with open('pacman_rewards_per_episode.txt', 'w') as f:
+            for step, value in zip(self.episode_arr[1:], self.returns[1:]):
+                f.write("{}\t{}\n".format(step, value)) 
+
+
 
 if __name__ == '__main__':
     ray.init()
@@ -423,5 +470,11 @@ if __name__ == '__main__':
         'num_workers': 0            # We aren't using parallelism
     })
 
+    i = 0
     while True:
         print(trainer.train())
+        i += 1
+        if i % 2 == 0:
+            checkpoint = trainer.save_checkpoint(Path().absolute())
+            print("Ith iteration{}\n".format(i))
+            print("checkpoint saved")
