@@ -459,8 +459,6 @@ class Pacman(gym.Env):
             for step, value in zip(self.episode_arr[1:], self.returns[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
 
-
-
 if __name__ == '__main__':
     ray.init()
     trainer = ppo.PPOTrainer(env=Pacman, config={
@@ -472,9 +470,12 @@ if __name__ == '__main__':
 
     i = 0
     while True:
-        print(trainer.train())
-        i += 1
+        result = trainer.train()
+        print(result)
+        print("Iteration: {}\n".format(i))
         if i % 2 == 0:
-            checkpoint = trainer.save_checkpoint(Path().absolute())
-            print("Ith iteration{}\n".format(i))
-            print("checkpoint saved")
+            checkpoint_path = trainer.save()
+            print("checkpoint saved")   
+            print(checkpoint_path)
+        i += 1
+
