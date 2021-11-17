@@ -3,7 +3,7 @@ layout: default
 title:  Home
 ---
 
-# Project: PacmAIn
+# Project: Pac-mAIn
 
 # PROJECT SUMMARY
 
