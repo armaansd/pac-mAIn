@@ -31,19 +31,19 @@ from ray.rllib.agents import ppo
 def drawDiamond():
     diamond = ""
     for x in [-13, -11, -9, -7, -5, -3, -1, 0, 2, 4, 6, 8, 10, 12]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,13)
+        diamond += "<DrawItem x ='{}' y='6' z='{}' type='diamond' />".format(x,13)
         diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,13)
     
     for x in [-13, -11, -9, -7, -5, -3, 2, 4, 6, 8, 10]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,-15)
+        diamond += "<DrawItem x ='{}' y='6' z='{}' type='diamond' />".format(x,-15)
         diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,-15)
         
     for z in [-15, -13, -11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(12,z)
+        diamond += "<DrawItem x ='{}' y='6' z='{}' type='diamond' />".format(12,z)
         diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(12,z)
 
     for z in [-13, -11, -9, -7, -5, -3, -1, 1, 3, 5, 7, 9, 11]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(-13,z)
+        diamond += "<DrawItem x ='{}' y='6' z='{}' type='diamond' />".format(-13,z)
         diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(-13,z)
     return diamond
 
@@ -148,7 +148,6 @@ class Pacman(gym.Env):
         }
 
         # Rllib Parameters
-        #self.action_space = Discrete(len(self.action_dict))
         self.action_space = Box(low=-1, high=1, shape=(3,), dtype=np.float32)
         self.observation_space = Box(0, 1, shape=(2 * self.obs_size * self.obs_size, ), dtype=np.float32)
 
@@ -224,17 +223,17 @@ class Pacman(gym.Env):
             info: <dict> dictionary of extra information
         """
 
-        
-        move_command = 'move ' + str(action[0])
-        turn_command = 'turn ' + str(action[1])
-        
-        self.agent_host.sendCommand(move_command)
-        self.agent_host.sendCommand(turn_command)
+        command = 'move ' + str(action[0])
+        self.agent_host.sendCommand(command)
+
+        command = 'turn ' + str(action[1])
+        self.agent_host.sendCommand(command)
         time.sleep(.2)
 
 
         self.episode_step += 1
-        self.steps_taken += 1
+        if(self.diamonds_collected < 52):
+            self.steps_taken += 1
 
         # Get Observation
         world_state = self.agent_host.getWorldState()
@@ -260,7 +259,6 @@ class Pacman(gym.Env):
         if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds 
             print("Collected all diamonds!\n")
             print("Steps taken: {}\n".format(self.steps_taken))
-            self.episode_step = self.max_episode_steps - 1 # To end the mission set steps to the max
 
         return self.obs, reward, done, dict()
 
@@ -320,7 +318,7 @@ class Pacman(gym.Env):
                             <RewardForCollectingItem>
                                 <Item reward="1" type="diamond"/>
                             </RewardForCollectingItem>
-                            <AgentQuitFromReachingCommandQuota total="'''+str(2* self.max_episode_steps)+'''"/>
+                            <AgentQuitFromReachingCommandQuota total="'''+str(self.max_episode_steps)+'''"/>
                             <AgentQuitFromTouchingBlockType>
                                 <Block type="bedrock" />
                             </AgentQuitFromTouchingBlockType>
@@ -426,9 +424,9 @@ class Pacman(gym.Env):
         plt.title('Pacman: Total Steps v. Returns')
         plt.ylabel('Returns')
         plt.xlabel('Steps')
-        plt.savefig('pacman_returns.png')
+        plt.savefig('pacman_returns_cont.png')
 
-        with open('pacman_returns.txt', 'w') as f:
+        with open('pacman_returns_cont.txt', 'w') as f:
             for step, value in zip(self.steps[1:], self.returns[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
 
@@ -446,9 +444,9 @@ class Pacman(gym.Env):
         plt.title('Pacman: Episodes v. Steps')
         plt.ylabel('Steps Taken')
         plt.xlabel('Episode No.')
-        plt.savefig('pacman_steps.png')
+        plt.savefig('pacman_steps_cont.png')
 
-        with open('pacman_steps.txt', 'w') as f:
+        with open('pacman_steps_cont.txt', 'w') as f:
             for step, value in zip(self.episode_arr[1:], self.episode_step_arr[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
     
@@ -463,9 +461,9 @@ class Pacman(gym.Env):
         plt.title('Pacman: Episodes v. Reward')
         plt.ylabel('Returns')
         plt.xlabel('Episode No.')
-        plt.savefig('pacman_rewards_per_episode.png')
+        plt.savefig('pacman_rewards_per_episode_cont.png')
 
-        with open('pacman_rewards_per_episode.txt', 'w') as f:
+        with open('pacman_rewards_per_episode_cont.txt', 'w') as f:
             for step, value in zip(self.episode_arr[1:], self.returns[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
 
