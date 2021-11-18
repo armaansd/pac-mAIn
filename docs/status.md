@@ -17,16 +17,16 @@ Algorithm Used: PPO
 - One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer. 
 - We defined some parameters for PPO as follows:
 
-###Environement Setup
+### Environement Setup
 - 28 x 31 Map
 - 26 x 29 Walking space
 - 52 Diamonds
 
-###Rewards
+### Rewards
 - Diamond +1
 - Touching Zombie -1
 
-###Action Space
+### Action Space
 - Move +1 -> Move 1 block forward
 - Turn +1 -> Turn 90 degrees right
 - Turn -1 -> Turn 90 degrees left
