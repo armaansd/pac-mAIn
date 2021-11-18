@@ -23,10 +23,10 @@ title: Status
 
 # Approach
 ## Algorithm Used: PPO
-<p>
-One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. 
-</p>
+<p>One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. </p>
+
+<p>In our scenario, an 2 x 5 x 5 observation grid for entities near the agent will be generated. Diamonds will be enumerated with the value of 1. Zombies will be enumerated with a value of -1. Since diamonds will be removed from the map whenever the agent picks it up, an observation grid for entities is needed instead of for blocks around the agent. Adjusting the index of the item according to the agent will help update the agent's obervation states and rewards states to update its next policy.</p>
   
 We used discrete actions and defined the action space for PPO as follows:
 
@@ -35,8 +35,11 @@ We used discrete actions and defined the action space for PPO as follows:
 - Turn +1 -> Turn 90 degrees right
 - Turn -1 -> Turn 90 degrees left
 
-## Following diagram from RLlib's algorithm website 
+## Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
+
+## PPO defines a probability ratio between its new policy and old policy
+<img src="https://user-images.githubusercontent.com/75513952/142361612-b7bd9bf5-2157-4403-9204-516b20206f91.png" width="800" height="300">
 
 
 
