@@ -19,7 +19,6 @@ title: Status
 
 ### Environement Setup
 - 28 x 31 Map
-- 26 x 29 Walking space
 - 52 Diamonds
 
 ### Rewards
@@ -33,11 +32,11 @@ title: Status
 
 
 
-## Evaluation
+# Evaluation
 
-## Remaining Goals and Challenges
+# Remaining Goals and Challenges
 
-## Resources Used 
+# Resources Used 
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>     List of RLlib algorithms
