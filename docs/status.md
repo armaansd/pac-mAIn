@@ -75,19 +75,19 @@ We used discrete actions and defined the action space for PPO as follows:
 ## Remaining Goals and Challenges
 
 <p> 
-Currently we are testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid.</p>
+Currently our prototype is limited as we were testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid. Since the zombie or enemy agent will be moving, it will not be static, so this may pose a challenge for our learning algorithms. We could improve on our agent's observation and action policy in order to solve this. 
+</p>
   
-<p>Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. </p>
-
-Since the zombie or enemy agent will be moving, it will not be static, so this may pose a challenge for our learning algorithms. 
+<p>
+Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. We will then compare it with our agent learned on PPO. 
 </p>
 
 ### Resources Used 
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
-- <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>     List of RLlib algorithms
-- <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>     RLlib's implementation of PPO
-- <https://minecraft-archive.fandom.com/wiki/Blocks>     Minecraft wiki describing MineCraft block types
+- <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>    
+- <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>   
+- <https://minecraft-archive.fandom.com/wiki/Blocks>    
 - <https://towardsdatascience.com/on-policy-v-s-off-policy-learning-75089916bc2f#:~:text=On%2DPolicy%20learning%20algorithms%20are,already%20using%20for%20action%20selection.>
 
 
