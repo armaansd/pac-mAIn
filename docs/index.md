@@ -17,19 +17,11 @@ title:  Home
 - [Status](status.html)
 - [Final](final.html)
 
-
+## Algorithms We Will Explore
+- PPO
+- Tabular Q-Learning
 
 #### Source code: <https://github.com/armaansd/pac-main>
-
-
-![image](https://user-images.githubusercontent.com/75513952/138030559-b204cd0b-ddb9-435c-b90d-8a80f92217f0.png)
-
-[quickref]: https://github.com/mundimark/quickrefs/blob/master/HTML.md
-
-
-
-
-
 
 
 ## Resources Used 
@@ -39,3 +31,5 @@ title:  Home
 - <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>    
 - <https://minecraft-archive.fandom.com/wiki/Blocks>
 
+
+[quickref]: https://github.com/mundimark/quickrefs/blob/master/HTML.md
