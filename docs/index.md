@@ -13,11 +13,10 @@ title:  Home
 
 
 ## Reports:
-<ul>(<li>
-- [Proposal](<proposal.html>)
-- [Status](<status.html>)
-- [Final](<final.html>)
-</li>)+</ul>
+###- [Proposal](proposal.html)
+###- [Status](status.html)
+###- [Final](final.html)
+
 
 
 #### Source code: <https://github.com/armaansd/pac-main>
