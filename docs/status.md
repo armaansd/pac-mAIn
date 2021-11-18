@@ -32,11 +32,11 @@ title: Status
 
 
 
-# Evaluation
+## Evaluation
 
-# Remaining Goals and Challenges
+## Remaining Goals and Challenges
 
-# Resources Used 
+### Resources Used 
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>     List of RLlib algorithms
