@@ -230,7 +230,8 @@ class Pacman(gym.Env):
         self.agent_host.sendCommand(command)
         time.sleep(.2)
         self.episode_step += 1
-        self.steps_taken += 1
+        if(self.diamonds_collected != 52):
+            self.steps_taken += 1
 
         # Get Observation
         world_state = self.agent_host.getWorldState()
@@ -256,7 +257,6 @@ class Pacman(gym.Env):
         if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds 
             print("Collected all diamonds!\n")
             print("Steps taken: {}\n".format(self.steps_taken))
-            self.episode_step = self.max_episode_steps - 1 # To end the mission set steps to the max
 
         return self.obs, reward, done, dict()
 
@@ -484,3 +484,4 @@ if __name__ == '__main__':
             print("checkpoint saved")   
             print(checkpoint_path)
         i += 1
+
