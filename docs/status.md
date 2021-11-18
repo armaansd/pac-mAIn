@@ -43,7 +43,7 @@ We used discrete actions and defined the action space for PPO as follows:
 
 
 ## Evaluation
-Quantitative:
+### Quantitative:
 <p> Because the goal of Pac-Man is to gather points, our current evaluation is based on how many points our agent obtained per episode and how many steps it took per episode. The agent receives plus 1 reward for collecting diamonds and negative 1 reward for touching a zombie. Each episode length is at most 500 steps. Since we only tested our agent's ability to gather diamonds, our goal was to evaluate how it would perform without an enemy in the way. Thus the following graphs represent metrics without encountering zombies. </p>
 
 <p>Our first metric evaluation is total steps versus the reward the agent obtained. As we can see, initially the agent is not able to gather all diamonds on the map. However, as more training goes on, the amount of reward the agent is able to obtain increases. After 15,000 steps the agent is able to obtain all or most diamonds on the map.</p>
@@ -61,7 +61,7 @@ Quantitative:
 - Discrete Movement
 <img src="https://user-images.githubusercontent.com/75513952/142354766-c26b8869-5cb0-458a-8687-d68c33e14d96.png" width="500" height="300">
 
-Qualitative:
+### Qualitative:
 <p>One thing to note, there was a bug during our mission runs. Sometimes one or two diamonds don't get spawned properly so there were less than 52 diamonds for the agent to collect. Thus one method we evaluated our agent was to see how consistent the agent was at performing its task. As we can see from the graphs above, the agent was able to consistently gather 45 to 52 diamonds per run after 15000 steps. This could be improved with more runs.</p>
 
 <p> We also compared graphs for continuous movement and found that PPO with continuous movement did not result in much improvement compared to discrete movement. Unlike discrete movement, training with continuous movement resulted in more fluctuations with the amount of rewards our agent was able to obtain. Our agent under continuous movement was unable to collect most or all the diamonds on the map. </p>
