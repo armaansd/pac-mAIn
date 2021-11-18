@@ -2,7 +2,9 @@
 layout: default
 title: Status
 ---
-
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=GXTNISa5NKk" frameborder="0" allowfullscreen></iframe>
+</iframe>
+      
 # Project Summary
 <p>The goal of our project is to train our agent to play a modified Mincraft recreation of the game Pac-Man. The goal of our agent is to get as many points as possible before time runs out (500 steps). The agent will be placed in a 28 x 31 enclosed maze and will have to traverse the map in order to pick up diamonds located around the maze. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 52 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
 
