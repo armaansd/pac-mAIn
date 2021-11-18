@@ -47,7 +47,7 @@ We used discrete actions and defined the action space for PPO as follows:
 <p>PPO uses a on-policy update and clips the gradient descent step so learning is improved. The PPO objective function takes the minimum value between the original value and the clipped value. Positive advantage function means good action and negative advantage means bad action.</p>
 
 
-## Evaluation
+# Evaluation
 ### Quantitative:
 <p> Because the goal of Pac-Man is to gather points, our current evaluation is based on how many points our agent obtained per episode and how many steps it took per episode. The agent receives plus 1 reward for collecting diamonds and negative 1 reward for touching a zombie. Each episode length is at most 500 steps. Since we only tested our agent's ability to gather diamonds, our goal was to evaluate how it would perform without an enemy in the way. Thus the following graphs represent metrics without encountering zombies. </p>
 
@@ -77,7 +77,7 @@ We used discrete actions and defined the action space for PPO as follows:
 <img src="https://user-images.githubusercontent.com/75513952/142358084-1dca03ad-ec68-44cb-88c0-a01c769ea037.png" width="500" height="300">
 
 
-## Remaining Goals and Challenges
+# Remaining Goals and Challenges
 
 <p> 
 Currently our prototype is limited as we were testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid. Since the zombie or enemy agent will be moving, it will not be static, so this may pose a challenge for our learning algorithms. We could improve on our agent's observation and action policy in order to solve this. 
