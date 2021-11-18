@@ -4,6 +4,7 @@ title:  Home
 ---
 
 # PROJECT SUMMARY
+====================
 
 #### The goal of our project is to train our agent to play a Mincraft recreation of the game Pac-Man. 
 
