@@ -39,10 +39,12 @@ We used discrete actions and defined the action space for PPO as follows:
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 ## PPO defines a probability ratio between its new policy and old policy
-<img src="https://user-images.githubusercontent.com/75513952/142361612-b7bd9bf5-2157-4403-9204-516b20206f91.png" width="600" height="200">
+<img src="https://user-images.githubusercontent.com/75513952/142361916-0a344992-c154-4a24-a000-c914f0de2f32.png" width="600" height="200">
 
+## Objective function of PPO
+<img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="600" height="200">
 
-
+<p>PPO uses a on-policy update and clips the gradient descent step so learning is improved. The PPO objective function takes the minimum value between the original value and the clipped value. Positive advantage function means good action and negative advantage means bad action.</p>
 
 
 ## Evaluation
@@ -92,5 +94,5 @@ Since PPO is an on-policy algorithm, we would like to try an off-policy algorith
 - <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>   
 - <https://minecraft-archive.fandom.com/wiki/Blocks>    
 - <https://towardsdatascience.com/on-policy-v-s-off-policy-learning-75089916bc2f#:~:text=On%2DPolicy%20learning%20algorithms%20are,already%20using%20for%20action%20selection.>
-
+- <https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d>
 
