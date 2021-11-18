@@ -32,7 +32,7 @@ title: Status
 
 Although we used an off the shelf implementation, here is the update equation for PPO.
 
-<img src="https://user-images.githubusercontent.com/75513952/142340313-f3810562-dbb2-40ab-8c90-85edab720076.png" width="400" height="100">
+<img src="https://user-images.githubusercontent.com/75513952/142340313-f3810562-dbb2-40ab-8c90-85edab720076.png" width="800" height="100">
 
 
 
