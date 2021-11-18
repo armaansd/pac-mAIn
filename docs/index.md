@@ -9,6 +9,8 @@ title:  Home
 
 <p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie and touches it, it will receive a penalty score.</p>
 
+<p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
+
 <img src="https://user-images.githubusercontent.com/75513952/142333894-bb3948dc-c27e-4b5d-9723-6c287426d49d.png" width="1000" height="700">
 
 <img src="https://user-images.githubusercontent.com/75513952/142359385-d5b8d112-38a5-465f-8452-05fbb590e8d4.JPG" width="700" height="500">
