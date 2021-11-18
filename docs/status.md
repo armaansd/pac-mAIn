@@ -10,7 +10,7 @@ title: Status
 
 <p> </p>
 
-<img src="https://user-images.githubusercontent.com/75513952/142336340-20a53401-44f9-48f4-a5fd-9d6d77205444.png" width="900" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142336340-20a53401-44f9-48f4-a5fd-9d6d77205444.png" width="900" height="500">
 
 # Approach
 ## Algorithm Used: PPO
@@ -31,7 +31,7 @@ title: Status
 - Turn -1 -> Turn 90 degrees left
 
 ## Following diagram from RLlib website 
-<img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="1000" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="1000" height="700">
 
 
 Although we used an off the shelf implementation, here is the update equation for PPO.
