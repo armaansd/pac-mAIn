@@ -42,7 +42,7 @@ We used discrete actions and defined the action space for PPO as follows:
 - r(θ) = π<sub>θ</sub>(a|s) / π<sub>θold</sub>(a|s)
 
 ## Objective function of PPO
-<img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="80">
+<img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="70">
 
 <p>PPO uses a on-policy update and clips the gradient descent step so learning is improved. The PPO objective function takes the minimum value between the original value and the clipped value. Positive advantage function means good action and negative advantage means bad action.</p>
 
