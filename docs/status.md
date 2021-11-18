@@ -12,11 +12,6 @@ title: Status
 
 <img src="https://user-images.githubusercontent.com/75513952/142336340-20a53401-44f9-48f4-a5fd-9d6d77205444.png" width="900" height="700">
 
-# Approach
-## Algorithm Used: PPO
-- One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer. 
-- We defined some parameters for PPO as follows:
-
 ### Environement Setup
 - 28 x 31 Map
 - 52 Diamonds
@@ -25,18 +20,25 @@ title: Status
 - Diamond +1
 - Touching Zombie -1
 
+
+# Approach
+## Algorithm Used: PPO
+<p>
+One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
+PPO is a on-policy algorithm, meaning that it explores by sampling actions according to the latest version of its stochastic policy. Initially the actions the agent will perform will be based on it's initial conditions, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. PPO uses a on-policy update and clips the gradient descent step so learning is improved. 
+</p>
+  
+We used discrete actions and defined the action space for PPO as follows:
+
 ### Action Space
 - Move +1 -> Move 1 block forward
 - Turn +1 -> Turn 90 degrees right
 - Turn -1 -> Turn 90 degrees left
 
-## Following diagram from RLlib website 
+## Following diagram from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 
-Although we used an off the shelf implementation, here is the update equation for PPO.
-
-<img src="https://user-images.githubusercontent.com/75513952/142340313-f3810562-dbb2-40ab-8c90-85edab720076.png" width="800" height="100">
 
 
 
@@ -44,11 +46,16 @@ Although we used an off the shelf implementation, here is the update equation fo
 
 ## Remaining Goals and Challenges
 
+<p> 
+Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. 
+</p>
+
 ### Resources Used 
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>     List of RLlib algorithms
 - <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>     RLlib's implementation of PPO
 - <https://minecraft-archive.fandom.com/wiki/Blocks>     Minecraft wiki describing MineCraft block types
+- <https://towardsdatascience.com/on-policy-v-s-off-policy-learning-75089916bc2f#:~:text=On%2DPolicy%20learning%20algorithms%20are,already%20using%20for%20action%20selection.>
 
 
