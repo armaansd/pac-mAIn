@@ -25,7 +25,7 @@ title: Status
 ## Algorithm Used: PPO
 <p>
 One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions according to the latest version of its stochastic policy. Initially the actions the agent will perform will be based on it's initial conditions, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. PPO uses a on-policy update and clips the gradient descent step so learning is improved. 
+PPO is a on-policy algorithm, meaning that it explores by sampling actions according to the latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. 
 </p>
   
 We used discrete actions and defined the action space for PPO as follows:
