@@ -39,7 +39,7 @@ We used discrete actions and defined the action space for PPO as follows:
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 ## PPO defines a probability ratio between its new policy and old policy
-<img src="https://user-images.githubusercontent.com/75513952/142361612-b7bd9bf5-2157-4403-9204-516b20206f91.png" width="800" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142361612-b7bd9bf5-2157-4403-9204-516b20206f91.png" width="600" height="200">
 
 
 
