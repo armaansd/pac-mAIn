@@ -14,9 +14,9 @@ title:  Home
 
 ## Reports:
 <ul>(<li>
-#### - [Proposal](proposal.html)
-#### - [Status](status.html)
-#### - [Final](final.html)
+- [Proposal](proposal.html)
+- [Status](status.html)
+- [Final](final.html)
 </li>)+</ul>
 
 
