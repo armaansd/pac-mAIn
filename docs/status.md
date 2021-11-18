@@ -25,7 +25,7 @@ title: Status
 ## Algorithm Used: PPO
 <p>
 One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions according to the latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. 
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. 
 </p>
   
 We used discrete actions and defined the action space for PPO as follows:
@@ -43,14 +43,32 @@ We used discrete actions and defined the action space for PPO as follows:
 
 
 ## Evaluation
+Quantitative:
+<p> Because the goal of Pac-Man is to gather points, our current evaluation is based on how many points our agent obtained per episode and how many steps it took per episode. The agent receives plus 1 reward for collecting diamonds and negative 1 reward for touching a zombie. Each episode length is at most 500 steps. Since we only tested our agent's ability to gather diamonds, our goal was to evaluate how it would perform without an enemy in the way. Thus the following graphs represent metrics without encountering zombies. </p>
+
+<p>Our first metric evaluation is total steps versus the reward the agent obtained. As we can see, initially the agent is not able to gather all diamonds on the map. However, as more training goes on, the amount of reward the agent is able to obtain increases. After 15,000 steps the agent is able to obtain all or most diamonds on the map.</p>
+
+- Discrete movement
 <img src="https://user-images.githubusercontent.com/75513952/142354740-e98327f3-f642-49d9-a9ba-f146a04f9415.png" width="500" height="300">
 
+<p>Our second metric evaluation is similar to the previous one. We compared the the number of episodes versus the reward the agent obtained. Similar to the previous metrics, the amount of reward increases as more episodes occur. We can see after 30 episodes, the agent starts to consistently get most of the diamonds on the map. </p>
+
+- Discrete Movement
 <img src="https://user-images.githubusercontent.com/75513952/142354749-c8be969b-3c21-4112-ad19-530c700fc8fe.png" width="500" height="300">
 
+<p>Our third metric is episode versus steps. This means how many steps the agent took per episode. Ideally the graph should start having a negative slope as more training occurs. This is because as the agent gets better at collecting diamonds, it should require less steps per episode. Initially, the agent takes 500 steps per episode, which is the maximum. However around 30 episodes, it starts to take less steps.</p>
+
+- Discrete Movement
 <img src="https://user-images.githubusercontent.com/75513952/142354766-c26b8869-5cb0-458a-8687-d68c33e14d96.png" width="500" height="300">
 
+Qualitative:
+<p>One thing to note, there was a bug during our mission runs. Sometimes one or two diamonds don't get spawned properly so there were less than 52 diamonds for the agent to collect. Thus one method we evaluated our agent was to see how consistent the agent was at performing its task. As we can see from the graphs above, the agent was able to consistently gather 45 to 52 diamonds per run after 15000 steps. This could be improved with more runs.</p>
 
+<p> We also compared graphs for continuous movement and found that PPO with continuous movement did not result in much improvement compared to discrete movement. Unlike discrete movement, training with continuous movement resulted in more fluctuations with the amount of rewards our agent was able to obtain. Our agent under continuous movement was unable to collect most or all the diamonds on the map. </p>
 
+- Continuous Movement
+<img src="https://user-images.githubusercontent.com/75513952/142357431-bf59fb60-c635-42b8-960e-0adbda958229.png" width="500" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142357463-13938c32-e4a3-4d6e-a261-ca92dc411798.png" width="500" height="300">
 
 
 ## Remaining Goals and Challenges
