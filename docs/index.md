@@ -11,7 +11,8 @@ title:  Home
 
 <img src="https://user-images.githubusercontent.com/75513952/142333894-bb3948dc-c27e-4b5d-9723-6c287426d49d.png" width="1000" height="700">
 
-#### Source code: <https://github.com/armaansd/pac-main>
+## Source code: 
+- <https://github.com/armaansd/pac-main>
 
 ## Reports:
 - [Proposal](proposal.html)
