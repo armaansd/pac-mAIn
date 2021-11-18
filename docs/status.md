@@ -67,16 +67,17 @@ We used discrete actions and defined the action space for PPO as follows:
 <p> We also compared graphs for continuous movement and found that PPO with continuous movement did not result in much improvement compared to discrete movement. Unlike discrete movement, training with continuous movement resulted in more fluctuations with the amount of rewards our agent was able to obtain. Our agent under continuous movement was unable to collect most or all the diamonds on the map. </p>
 
 - Continuous Movement
-<img src="https://user-images.githubusercontent.com/75513952/142357431-bf59fb60-c635-42b8-960e-0adbda958229.png" width="500" height="300">
-<img src="https://user-images.githubusercontent.com/75513952/142357555-ec07469d-f0cc-4737-9f1b-f3eefb136281.png" width="500" height="300">
-<img src="https://user-images.githubusercontent.com/75513952/142357463-13938c32-e4a3-4d6e-a261-ca92dc411798.png" width="500" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142358028-684667f9-d2a5-4bc7-a812-da3ca2273885.png" width="500" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142358057-b3b707a7-df9b-4e5f-bf39-4c8345f7771e.png" width="500" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/142358084-1dca03ad-ec68-44cb-88c0-a01c769ea037.png" width="500" height="300">
 
 
 ## Remaining Goals and Challenges
 
 <p> 
-Currently we are testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid. 
-Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. 
+Currently we are testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid.</p>
+  
+<p>Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. </p>
 
 Since the zombie or enemy agent will be moving, it will not be static, so this may pose a challenge for our learning algorithms. 
 </p>
