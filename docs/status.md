@@ -40,8 +40,7 @@ We used discrete actions and defined the action space for PPO as follows:
 
 ## PPO defines a probability ratio between its new policy and old policy
 
-r(θ) = π<sub>θ</sub>(a|s) / π<sub>θold</sub>(a|s)
-<img src="https://user-images.githubusercontent.com/75513952/142361916-0a344992-c154-4a24-a000-c914f0de2f32.png" width="400" height="150">
+## r(θ) = π<sub>θ</sub>(a|s) / π<sub>θold</sub>(a|s)
 
 ## Objective function of PPO
 <img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="1000" height="100">
