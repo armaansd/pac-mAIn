@@ -2,7 +2,9 @@
 layout: default
 title: Status
 ---
-video
+{% include youtubePlayer.html id=page.youtubeId %}
+
+
 <iframe width="560" height="315" src="https://www.youtube.com/watch?v=GXTNISa5NKk" frameborder="0" allowfullscreen></iframe>
       
 # Project Summary
