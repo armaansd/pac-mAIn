@@ -17,7 +17,7 @@ title: Proposal
    
 ## 2. AI/ML Algorithms
 
-<p>We are planning to implement Deep-Q Learning and reinforcement learning to train our agent.</p>
+<p>We are planning to implement Q Learning and PPO to train our agent.</p>
 
 
 
@@ -28,6 +28,7 @@ title: Proposal
 
 <p>There are several sanity checks we can do to qualitatively access our agent. We can observe if our agent is avoiding enemies. It is considered a failure if our agent constantly runs into enemies and loses all of its lives. We expect the agent to lose some lives, but not lose the game. Likewise, the agent should be actively looking for pellets to collect. If the agent is just standing around for extended periods of time, then we will consider it a failure.</p>
 
+<p>We plan to implement a couple RL algorithms and compare their results</p>
 
 
 
