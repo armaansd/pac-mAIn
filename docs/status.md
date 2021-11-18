@@ -43,11 +43,23 @@ We used discrete actions and defined the action space for PPO as follows:
 
 
 ## Evaluation
+<img src="https://user-images.githubusercontent.com/75513952/142354740-e98327f3-f642-49d9-a9ba-f146a04f9415.png" width="500" height="300">
+
+<img src="https://user-images.githubusercontent.com/75513952/142354749-c8be969b-3c21-4112-ad19-530c700fc8fe.png" width="500" height="300">
+
+<img src="https://user-images.githubusercontent.com/75513952/142354766-c26b8869-5cb0-458a-8687-d68c33e14d96.png" width="500" height="300">
+
+
+
+
 
 ## Remaining Goals and Challenges
 
 <p> 
+Currently we are testing PPO on a map without mobs. We wanted to get a measure of how successful our agent can collect diamonds. This was our baseline. Our goal will then be to include at least one zombie or enemy agent in which our agent will need to avoid. 
 Since PPO is an on-policy algorithm, we would like to try an off-policy algorithm, such as Q-learning. Our remaining goal is to implement our Pac-man AI using tabular Q-Learning. 
+
+Since the zombie or enemy agent will be moving, it will not be static, so this may pose a challenge for our learning algorithms. 
 </p>
 
 ### Resources Used 
