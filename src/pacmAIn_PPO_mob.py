@@ -7,8 +7,8 @@
 # Map is a 28 x 30 maze
 # 52 diamonds the agent needs to collect
 
-# To-do 
-# PPO Currently doesnt work well. Maybe with more runs
+# Currently no zombies 
+# Status: Testing item gathering only for now
 
 try:
     from malmo import MalmoPython
@@ -39,7 +39,7 @@ class MyModel(TorchModelV2, nn.Module):
         TorchModelV2.__init__(self, *args, **kwargs)
         nn.Module.__init__(self)
 
-        self.obs_size = 25
+        self.obs_size = 15
 
         self.conv1 = nn.Conv2d(2, 32, kernel_size=3, padding=1) # 32, 5, 5 
         self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, 5, 5 
@@ -74,7 +74,7 @@ class Pacman(gym.Env):
         # Static Parameters
         self.runs = 0
         self.size = 20
-        self.obs_size = 25   # Set back to 100 later
+        self.obs_size = 15   # Set back to 100 later
         self.max_episode_steps = 500
         self.log_frequency = 10
         self.action_dict = {
@@ -239,7 +239,7 @@ class Pacman(gym.Env):
                                 <DrawBlock x='-1'  y='1' z='-14' type='redstone_block' />
                                 <DrawBlock x='0'  y='1' z='12' type='grass' />
                                 <DrawBlock x='-1'  y='1' z='12' type='grass' />
-                                <DrawEntity x='0.5'  y='2' z='11.5' type='Zombie' />
+                                <DrawEntity x='-12'  y='2' z='-8.5' type='Zombie' />
                             </DrawingDecorator>
                             <ServerQuitWhenAnyAgentFinishes/>
                         </ServerHandlers>
@@ -407,7 +407,7 @@ class Pacman(gym.Env):
                     x_dist = abs(x_dist)
                     z_dist = abs(z_dist)
                     
-                    if( (x_dist < 2 and x_dist >= 0) and (z_dist < 2 and z_dist >= 0)  ):
+                    if( (x_dist < 1.5 and x_dist >= 0) and (z_dist < 1.5 and z_dist >= 0)  ):
                         print("X: {} Z: {}".format(x_dist, z_dist))
                         return True
 
