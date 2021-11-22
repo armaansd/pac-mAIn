@@ -7,8 +7,8 @@
 # Map is a 28 x 30 maze
 # 52 diamonds the agent needs to collect
 
-# Currently no zombies 
-# Status: Testing item gathering only for now
+# To-do 
+# PPO Currently doesnt work well. Maybe with more runs
 
 try:
     from malmo import MalmoPython
