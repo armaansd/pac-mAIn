@@ -3,7 +3,7 @@ layout: default
 title: Status
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GXTNISa5NKk">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GXTNISa5NKk" frameborder="0" allowfullscreen>
 </iframe>
 
 in case embed doesn't work
