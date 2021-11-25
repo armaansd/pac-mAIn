@@ -39,11 +39,11 @@ class MyModel(TorchModelV2, nn.Module):
         TorchModelV2.__init__(self, *args, **kwargs)
         nn.Module.__init__(self)
 
-        self.obs_size = 15
+        self.obs_size = 25
 
-        self.conv1 = nn.Conv2d(2, 32, kernel_size=3, padding=1) # 32, 5, 5 
-        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, 5, 5 
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, 5, 5 
+        self.conv1 = nn.Conv2d(2, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
+        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
 
         self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 3)
         self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
@@ -51,11 +51,11 @@ class MyModel(TorchModelV2, nn.Module):
         self.value = None
     
     def forward(self, input_dict, state, seq_lens):
-        x  = input_dict['obs'] # BATCH, 2, 5, 5
+        x  = input_dict['obs'] # BATCH, 2, self.obs_size, self.obs_size
 
-        x = F.relu(self.conv1(x)) # BATCH 32, 5, 5 
-        x = F.relu(self.conv2(x)) # BATCH 32, 5, 5 
-        x = F.relu(self.conv3(x)) # BATCH 32, 5, 5 
+        x = F.relu(self.conv1(x)) # BATCH 32, self.obs_size, self.obs_size 
+        x = F.relu(self.conv2(x)) # BATCH 32, self.obs_size, self.obs_size 
+        x = F.relu(self.conv3(x)) # BATCH 32, self.obs_size, self.obs_size 
 
         x = x.flatten(start_dim=1) # BATCH, 800
 
@@ -74,7 +74,7 @@ class Pacman(gym.Env):
         # Static Parameters
         self.runs = 0
         self.size = 20
-        self.obs_size = 15   # Set back to 100 later
+        self.obs_size = 25   # Set back to 100 later
         self.max_episode_steps = 500
         self.log_frequency = 10
         self.action_dict = {
@@ -99,14 +99,23 @@ class Pacman(gym.Env):
 
         # Pacman Parameters
         self.obs = None
+        self.near_zombie = False  # To track is agent is near zombie
+        self.facing_zombie = False # If agent is facing zombie
+        self.took_damage = False   # Used to check if agent took damage
+
+        self.damage_taken = 0  # Damage taken
         self.episode_step = 0  # Steps in the episode
-        self.steps_taken = 0   # Steps agent took to find the solution
-        self.episode_return = 0
+        self.steps_taken = 0   # Steps agent took per episode
+        self.episode_return = 0 
         self.episode_number = 0
         self.diamonds_collected = 0
+
         self.returns = []
         self.steps = []
         self.diamonds = []
+        self.episode_arr = []
+        #self.episode_step_arr = []
+        
 
     def reset(self):
         """
@@ -123,22 +132,29 @@ class Pacman(gym.Env):
         current_step = self.steps[-1] if len(self.steps) > 0 else 0
         self.steps.append(current_step + self.steps_taken)
 
-        self.diamonds.append(self.diamonds_collected)
+        self.diamonds.append(self.diamonds_collected)    # Diamonds per episode
+        self.episode_arr.append(self.episode_number)     # Episode number
+        #self.episode_step_arr.append(self.steps_taken)   #Steps per episode
+
 
         self.episode_return = 0
         self.episode_step = 0
         self.steps_taken = 0
         self.diamonds_collected = 0
         self.episode_number+= 1
+        self.damage_taken = 0
+        self.facing_zombie = False
+        self.took_damage = False
 
         # Log
         if len(self.returns) > self.log_frequency + 1 and \
             len(self.returns) % self.log_frequency == 0:
             self.log_returns()
+            #self.log_steps()
             self.log_diamonds()
 
         # Get Observation
-        self.obs = self.get_observation(world_state)
+        self.obs, self.near_zombie = self.get_observation(world_state)
 
         return self.obs
 
@@ -155,21 +171,21 @@ class Pacman(gym.Env):
             done: <bool> indicates terminal state
             info: <dict> dictionary of extra information
         """
-
         command = self.action_dict[action]
-        #print("action {}\n".format(command))
 
-        self.agent_host.sendCommand(command)
-        time.sleep(.2)
-        self.episode_step += 1
-        if(self.diamonds_collected != 52):
-            self.steps_taken += 1
+        if (command != 'move 1' or (not self.facing_zombie)):
+            self.agent_host.sendCommand(command)
+            time.sleep(.2)
+            self.episode_step += 1
+
+            if(self.diamonds_collected != 52):
+                self.steps_taken += 1
 
         # Get Observation
         world_state = self.agent_host.getWorldState()
         for error in world_state.errors:
             print("Error:", error.text)
-        self.obs = self.get_observation(world_state) 
+        self.obs, self.near_zombie = self.get_observation(world_state) 
 
         # Get Done
         done = not world_state.is_mission_running 
@@ -177,29 +193,29 @@ class Pacman(gym.Env):
         # Get Reward
         reward = 0
         for r in world_state.rewards:
-            r_value = r.getValue()
-            reward += r_value
-            if(r_value == 1):
-                self.diamonds_collected += r_value
+            reward += r.getValue()
 
         # Checking if agent is near a zombie
         # Reward gets decremeneted if agent is touching zombie
         # Since there's no "RewardForTouchingEntity" we check this by finding the position of the agent and the position of the zombie
-        if(self.is_near_zombie(world_state) == True):
+        if(self.near_zombie == True):
             print("Too close to Zombie!!\n")
-            reward -= 1   # Decrement reward
-            self.agent_host.sendCommand("quit")
-            print("Agent ran into a Zombie! Agent died :(")
+            reward -= 1   # -1 for getting too close
+
+            if(self.took_damage == True):
+                print("Ouch! Took damage!")
+                reward -= 5   # -5 for taking damage
+            #self.agent_host.sendCommand("quit")
+            #print("Agent ran into a Zombie! Agent died :(")
 
         self.episode_return += reward
 
-        print()
         print("Episode Step " + str(self.episode_step) + "  Actual Step: " + str(self.steps_taken))
         print("Rewards gained: {}".format(self.episode_return))
         print("Diamonds collected: {}".format(self.diamonds_collected))
         print()
 
-        if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds 
+        if(self.diamonds_collected == 52 or self.returns == 52): # Quit when reaching 52 diamonds or max reward is 52
             print("Collected all diamonds!\n")
             print("Steps taken: {}\n".format(self.steps_taken))
             self.agent_host.sendCommand("quit")
@@ -239,7 +255,7 @@ class Pacman(gym.Env):
                                 <DrawBlock x='-1'  y='1' z='-14' type='redstone_block' />
                                 <DrawBlock x='0'  y='1' z='12' type='grass' />
                                 <DrawBlock x='-1'  y='1' z='12' type='grass' />
-                                <DrawEntity x='-12'  y='2' z='-8.5' type='Zombie' />
+                                <DrawEntity x='-12'  y='2' z='0' type='Zombie' />
                             </DrawingDecorator>
                             <ServerQuitWhenAnyAgentFinishes/>
                         </ServerHandlers>
@@ -248,7 +264,7 @@ class Pacman(gym.Env):
                     <AgentSection mode="Survival">
                         <Name>CS175Pacman</Name>
                         <AgentStart>
-                            <Placement x="0.5" y="2" z="-13.5" pitch="25"/>
+                            <Placement x="-0.5" y="2" z="-13.5" pitch="25"/>
                             <Inventory>
                                 <InventoryItem slot="0" type="diamond_pickaxe"/>
                             </Inventory>
@@ -256,6 +272,7 @@ class Pacman(gym.Env):
                         <AgentHandlers>
                             <DiscreteMovementCommands/>
                             <ObservationFromFullStats/>
+                            <ObservationFromFullInventory flat='false'/>
                             <ObservationFromRay/>  
                             <ObservationFromGrid>
                                 <Grid name="floorAll">
@@ -264,7 +281,7 @@ class Pacman(gym.Env):
                                 </Grid>
                             </ObservationFromGrid> 
                             <ObservationFromNearbyEntities>
-                                <Range name="itemAll" xrange="'''+ str(int(self.obs_size/2)) + '''" yrange='2' zrange="'''+ str(int(self.obs_size/2)) + '''" />                                
+                                <Range name="entities" xrange="'''+ str(int(self.obs_size/2)) + '''" yrange='2' zrange="'''+ str(int(self.obs_size/2)) + '''" />                                
                             </ObservationFromNearbyEntities>
                             <RewardForCollectingItem>
                                 <Item reward="1" type="diamond"/>
@@ -275,8 +292,7 @@ class Pacman(gym.Env):
                             <AgentQuitFromReachingCommandQuota total="'''+str(self.max_episode_steps)+'''"/>
                             <MissionQuitCommands quitDescription="found_all_diamonds"/>
                             <RewardForMissionEnd rewardForDeath="-2">
-                                <Reward description="encountered_zombie" reward="-1"/>
-                                <Reward description="found_all_diamonds" reward="1"/>
+                                <Reward description="found_all_diamonds" reward="1000"/>
                             </RewardForMissionEnd>
                         </AgentHandlers>
                     </AgentSection>
@@ -325,9 +341,12 @@ class Pacman(gym.Env):
 
         Returns
             observation: <np.array> the state observation
+            near_zombie: bool if agent is near zombie
         """
         obs = np.zeros((2, self.obs_size, self.obs_size))
-        allow_break_action = False
+        self.facing_zombie = False
+        self.took_damage = False
+        near_zombie = False
 
         while world_state.is_mission_running:
             time.sleep(0.1)
@@ -341,7 +360,7 @@ class Pacman(gym.Env):
                 observations = json.loads(msg)  
 
                 # Get observation
-                grid = observations['itemAll']
+                grid = observations['entities']
                 obs = obs.flatten()
                 for item in grid:
                     index = (int)(self.obs_size * self.obs_size/2) + (int)(item['x'] - grid[0]['x']) + (int)(item['z'] - grid[0]['z']) * self.obs_size
@@ -349,6 +368,8 @@ class Pacman(gym.Env):
                         obs[index] = 1
                     if(item['name'] == 'Zombie'):
                         obs[index] = -1
+                        near_zombie = self.is_near_zombie(item['x'], item['z'], grid[0]['x'], grid[0]['z'])
+
 
                 # We also enumerate the walls to be -2 so the agent knows that it's walking into walls
 
@@ -368,52 +389,63 @@ class Pacman(gym.Env):
                     obs = np.rot90(obs, k=3, axes=(1, 2))
                 #obs = obs.flatten()
                 
+                self.facing_zombie = observations['LineOfSight']['type'] == 'Zombie'
+                #print(self.facing_zombie)
+                
+                # Check if agent took damage 
+                damage_taken = observations['DamageTaken']
+                if(damage_taken - self.damage_taken > 0):
+                    self.damage_taken = damage_taken
+                    self.took_damage = True
+                else:
+                    self.took_damage = False
+                
+                # Check how many diamonds collected 
+                inventory = [item for item in observations['inventory'] if item['type'] == 'diamond']
+                if(len(inventory) != 0):
+                    self.diamonds_collected = inventory[0]['quantity'] 
+
                 break
-        #print(obs)
 
-        return obs
+        return obs, near_zombie
 
-    def is_near_zombie(self, world_state):
-        if world_state.number_of_observations_since_last_state > 0:
-            msg = world_state.observations[-1].text
-            observations = json.loads(msg)  
-            
-            # Get observation
-            grid = observations['itemAll']
-            #print(grid)
-            for item in grid:
-                x_dist = 1000
-                z_dist = 1000
-                if(item['name'] == 'Zombie'):
-                    # Handle negative coordinates
-                    if(item['x'] >= 0 and grid[0]['x'] >= 0):
-                        x_dist = item['x'] - grid[0]['x']
-                    elif(item['x'] <= 0 and grid[0]['x'] <= 0):
-                        x_dist = abs(item['x']) - abs(grid[0]['x'])
-                    elif(item['x'] <= 0 and grid[0]['x'] >= 0):
-                        x_dist = abs(item['x']) + grid[0]['x']
-                    elif(item['x'] >= 0 and grid[0]['x'] <= 0):
-                        x_dist = item['x'] + abs(grid[0]['x'])
-                    
-                    if(item['z'] >= 0 and grid[0]['z'] >= 0):
-                        z_dist = item['z'] - grid[0]['z']
-                    elif(item['z'] <= 0 and grid[0]['z'] <= 0):
-                        z_dist = abs(item['x']) - abs(grid[0]['x'])
-                    elif(item['z'] <= 0 and grid[0]['z'] >= 0):
-                        z_dist = abs(item['z']) + grid[0]['z']
-                    elif(item['z'] >= 0 and grid[0]['z'] <= 0):
-                        z_dist = item['z'] + abs(grid[0]['z'])
-
-                    x_dist = abs(x_dist)
-                    z_dist = abs(z_dist)
-                    
-                    if( (x_dist < 1.5 and x_dist >= 0) and (z_dist < 1.5 and z_dist >= 0)  ):
-                        print("X: {} Z: {}".format(x_dist, z_dist))
-                        return True
-
-        return False
+    def is_near_zombie(self, zombie_x, zombie_z, agent_x, agent_z):  
+        # args: zombie X and Z position and agent's X and Z positions
         
+        x_dist = 1000  # Arbitrary large numbers
+        z_dist = 1000  # Arbitrary large numbers
 
+        # Handle negative coordinates
+        # Getting distance between zombie item and agent (grid[0])
+        if(zombie_x >= 0 and agent_x >= 0):
+            x_dist = zombie_x - agent_x
+        elif(zombie_x <= 0 and agent_x <= 0):
+            x_dist = abs(zombie_x) - abs(agent_x)
+        elif(zombie_x <= 0 and agent_x >= 0):
+            x_dist = abs(zombie_x) + agent_x
+        elif(zombie_x >= 0 and agent_x <= 0):
+            x_dist = zombie_x + abs(agent_x)
+        
+        if(zombie_z >= 0 and agent_z >= 0):
+            z_dist = zombie_z - agent_z
+        elif(zombie_z <= 0 and agent_z <= 0):
+            z_dist = abs(zombie_z) - abs(agent_z)
+        elif(zombie_z <= 0 and agent_z >= 0):
+            z_dist = abs(zombie_z) + agent_z
+        elif(zombie_z >= 0 and agent_z <= 0):
+            z_dist = zombie_z + abs(agent_z)
+
+        x_dist = abs(x_dist)
+        z_dist = abs(z_dist)
+        
+        # Considering "Close" to be less than a block away from the agent. The agent and zombie are practically touching
+        if( (x_dist < 1.0 and x_dist >= 0) and (z_dist < 1.0 and z_dist >= 0)  ):
+            print("X: {} Z: {}".format(x_dist, z_dist))
+            return True
+        else:
+            return False
+        
+    # Logs total returns vs total steps
     def log_returns(self):
         """
         Log the current returns as a graph and text file
@@ -438,21 +470,37 @@ class Pacman(gym.Env):
         self.runs = self.runs + 1
         print("Run number: {}".format(self.runs))
     
-    # Graph of episode number vs the amount of reward collected
-    # Used to compare how many rewards agent received per episode
+    #Logs the number of diamonds collected per episode
     def log_diamonds(self):
 
         box = np.ones(self.log_frequency) / self.log_frequency
-        returns_smooth = np.convolve(self.diamonds[1:], box, mode='same')
+        diamonds_smooth = np.convolve(self.diamonds[1:], box, mode='same')
         plt.clf()
-        plt.plot(self.steps[1:], returns_smooth)
-        plt.title('Pacman: Total Steps v. Diamonds')
+        plt.plot(self.episode_arr[1:], diamonds_smooth)
+        plt.title('Pacman: Episodes v. Diamonds Collected')
         plt.ylabel('Diamonds Collected')
-        plt.xlabel('Steps')
-        plt.savefig('pacman_diamonds_collected.png')
+        plt.xlabel('Episode No.')
+        plt.savefig('pacman_diamond.png')
 
-        with open('pacman_diamonds_collected.txt', 'w') as f:
-            for step, value in zip(self.steps[1:], self.diamonds[1:]):
+        with open('pacman_diamond.txt', 'w') as f:
+            for step, value in zip(self.episode_arr[1:], self.diamonds[1:]):
+                f.write("{}\t{}\n".format(step, value)) 
+    
+    # Graph of episode number vs the amount of reward collected
+    # Used to compare how many rewards agent received per episode
+    def log_steps(self):
+
+        box = np.ones(self.log_frequency) / self.log_frequency
+        episode_smooth = np.convolve(self.episode_step_arr[1:], box, mode='same')
+        plt.clf()
+        plt.plot(self.episode_arr[1:], episode_smooth)
+        plt.title('Pacman: Episodes v. Steps')
+        plt.ylabel('Steps Taken')
+        plt.xlabel('Episode No.')
+        plt.savefig('pacman_steps.png')
+
+        with open('pacman_steps.txt', 'w') as f:
+            for step, value in zip(self.episode_arr[1:], self.episode_step_arr[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
 
 # Spawn diamonds around the maze
@@ -542,6 +590,9 @@ if __name__ == '__main__':
             'custom_model_config' : {}
         }
     })
+    
+    # Restore checkpoint
+    #trainer.restore("C:\\Users\\Presley\\Desktop\\Malmo\\Python_Examples\\checkpoint_7\\checkpoint-7")
 
     i = 0
     while True:
@@ -549,7 +600,7 @@ if __name__ == '__main__':
         print(result)
         print("Iteration: {}\n".format(i))
         if i % 2 == 0:
-            checkpoint_path = trainer.save()
+            checkpoint_path = trainer.save(Path().absolute())
             print("checkpoint saved")   
             print(checkpoint_path)
         i += 1
