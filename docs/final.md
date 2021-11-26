@@ -27,6 +27,7 @@ This will be exchanged for final vid later
 - Being close to a zombie -1
 - Receiving damage from zombie -5
 
+Similar to the original game, the agent will have "lives". The agent will have "3 lives" in which it able to receive 3 attacks from a zombie. After the third attack, the agent "dies"
 
 # Approach
 ## Algorithm Used: PPO
