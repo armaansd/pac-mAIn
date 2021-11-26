@@ -14,7 +14,6 @@ This will be exchanged for final vid later
 
 <p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
 
-<img src="https://user-images.githubusercontent.com/75513952/142336340-20a53401-44f9-48f4-a5fd-9d6d77205444.png" width="900" height="700">
 
 ### Environement Setup
 - 28 x 31 Map
