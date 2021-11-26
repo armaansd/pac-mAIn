@@ -10,7 +10,7 @@ This will be exchanged for final vid later
 # Project Summary
 <p>The goal of our project is to train our agent to play a modified recreation of Pac-Man on Minecraft. The goal of our agent is to obtain the highest score for the given map. The pellets from the original game will be substituted with diamonds. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 52 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
 
-<p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie and touches it, it will receive a penalty score.</p>
+<p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets attacked by the zombie, agent will "die" and received a penalty score.</p>
 
 <p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
 
@@ -21,13 +21,10 @@ This will be exchanged for final vid later
 
 ### Rewards
 - Diamond +1
-- Touching Zombie -1
-- A move that results in being close to a diamond +1
-- Touching walls -10
-- Being close to a zombie -1
-- Receiving damage from zombie -5
-
-Similar to the original game, the agent will have "lives". The agent will have "3 lives" in which it able to receive 3 attacks from a zombie. After the third attack, the agent "dies"
+- Move resulting in near diamond +1
+- Near Zombie -1
+- Death by Zombie -1
+- Touching wall -10
 
 # Approach
 ## Algorithm Used: PPO
