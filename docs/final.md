@@ -21,9 +21,8 @@ This will be exchanged for final vid later
 
 ### Rewards
 - Diamond +1
-- Move resulting in near diamond +1
 - Near Zombie -1
-- Death by Zombie -1
+- Damage by Zombie -5
 - Touching wall -10
 
 # Approach
