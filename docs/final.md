@@ -18,7 +18,7 @@ This will be exchanged for final vid later
 ### Environement Setup
 - 21 x 21 Map
 - 35 Diamonds
-<img src="https://user-images.githubusercontent.com/75513952/143675924-3145d205-3c8a-4f85-818c-735aa89c3387.png" width="300" height="300">
+<img src="https://user-images.githubusercontent.com/75513952/143675992-a3fe5114-a60e-47a5-bd1b-0821f692335b.png" width="400" height="400">
 
 
 ### Rewards
