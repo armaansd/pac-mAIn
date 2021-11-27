@@ -8,7 +8,7 @@ This will be exchanged for final vid later
 
       
 # Project Summary
-<p>The goal of our project is to train our agent to play a modified recreation of Pac-Man on Minecraft. The goal of our agent is to obtain the highest score for the given map. The pellets from the original game will be substituted with diamonds. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 52 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
+<p>The goal of our project is to train our agent to play a modified recreation of Pac-Man on Minecraft. The goal of our agent is to obtain the highest score for the given map. The pellets from the original game will be substituted with diamonds. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 35 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
 
 <p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets attacked by the zombie, agent will "die" and received a penalty score.</p>
 
@@ -16,8 +16,10 @@ This will be exchanged for final vid later
 
 
 ### Environement Setup
-- 28 x 31 Map
-- 52 Diamonds
+- 21 x 21 Map
+- 35 Diamonds
+<img src="https://user-images.githubusercontent.com/75513952/143675924-3145d205-3c8a-4f85-818c-735aa89c3387.png" width="300" height="300">
+
 
 ### Rewards
 - Diamond +1
