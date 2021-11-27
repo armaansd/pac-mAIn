@@ -14,9 +14,8 @@ title:  Home
 <img src="https://user-images.githubusercontent.com/75513952/142333894-bb3948dc-c27e-4b5d-9723-6c287426d49d.png" width="1000" height="700">
 
 <img src="https://user-images.githubusercontent.com/75513952/142359385-d5b8d112-38a5-465f-8452-05fbb590e8d4.JPG" width="700" height="500">
-<img src="https://user-images.githubusercontent.com/75513952/142359438-17bf66cc-eea4-4661-88ad-fc759962a00f.JPG" width="700" height="400">
-<img src="https://user-images.githubusercontent.com/75513952/142359434-0c49436b-f4c9-4838-bc4a-93a577edc3e9.JPG" width="700" height="400">
-
+<img src="https://user-images.githubusercontent.com/75513952/143676574-9cbbb382-7f74-49aa-b04b-06b1dbf32708.png" width="700" height="400">
+<img src="https://user-images.githubusercontent.com/75513952/143676588-5da81454-81ae-4428-adb4-72fdf4013a3e.png" width="700" height="400">
 
 
 ## Source code: 
