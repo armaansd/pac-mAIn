@@ -11,7 +11,7 @@ title:  Home
 
 <p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
 
-<img src="https://user-images.githubusercontent.com/75513952/142333894-bb3948dc-c27e-4b5d-9723-6c287426d49d.png" width="1000" height="700">
+<img src="https://user-images.githubusercontent.com/75513952/143676889-5ba0d833-10fb-4568-87b7-7dbb9cb87a60.png" width="1000" height="700">
 
 <img src="https://user-images.githubusercontent.com/75513952/143676641-45fbcbaf-842f-4e17-808b-c54a588448a0.png" width="700" height="500">
 <img src="https://user-images.githubusercontent.com/75513952/143676574-9cbbb382-7f74-49aa-b04b-06b1dbf32708.png" width="700" height="500">
