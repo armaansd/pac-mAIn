@@ -5,7 +5,7 @@ title:  Home
 
 # PROJECT SUMMARY
 
-<p>The goal of our project is to train our agent to play a modified Mincraft recreation of the game Pac-Man. The goal of our agent is to get as many points as possible before time runs out (500 steps). The agent will be placed in a 28 x 31 enclosed maze and will have to traverse the map in order to pick up diamonds located around the maze. The agent's score will be based on how many diamonds they collect in a given episode. We will develop our AI using Malmo. </p>
+<p>The goal of our project is to train our agent to play a modified Mincraft recreation of the game Pac-Man. The goal of our agent is to get as many points as possible before time runs out (500 steps). The agent will be placed in a 21 x 21 enclosed maze and will have to traverse the map in order to pick up diamonds located around the maze. There will be a total of 35 diamonds for the agent to collect. The agent's score will be based on how many diamonds they collect in a given episode. We will develop our AI using Malmo. </p>
 
 <p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie and touches it, it will receive a penalty score.</p>
 
