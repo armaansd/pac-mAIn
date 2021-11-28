@@ -16,6 +16,8 @@ This will be exchanged for final vid later
 
 
 ### Environement Setup
+We made some changes to the environment. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives. Thus, it learned to stand around instead of explore. Thus we added more walking space for the agent. 
+
 - 21 x 21 Map
 - 35 Diamonds
 <img src="https://user-images.githubusercontent.com/75513952/143676412-31181048-2007-4968-a8cd-5ae887007e2e.png" width="700" height="500">
