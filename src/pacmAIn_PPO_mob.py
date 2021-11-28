@@ -3,12 +3,11 @@
 
 # pacmAIn.py 
 #
+# pacmAIn.py 
+#
 # model learned with PPO 
-# Map is a 28 x 30 maze
-# 52 diamonds the agent needs to collect
-
-# Currently no zombies 
-# Status: Testing item gathering only for now
+# Map is a 21 x 21 maze
+# 35 diamonds the agent needs to collect
 
 try:
     from malmo import MalmoPython
