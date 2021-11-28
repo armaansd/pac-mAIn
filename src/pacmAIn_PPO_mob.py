@@ -70,7 +70,7 @@ class MyModel(TorchModelV2, nn.Module):
         self.value = None
     
     def forward(self, input_dict, state, seq_lens):
-        x  = input_dict['obs'] # BATCH, 2, self.obs_size, self.obs_size
+        x  = input_dict['obs'] # BATCH, 3, self.obs_size, self.obs_size
 
         x = F.relu(self.conv1(x)) # BATCH 32, self.obs_size, self.obs_size 
         x = F.relu(self.conv2(x)) # BATCH 32, self.obs_size, self.obs_size 
