@@ -1,6 +1,6 @@
 --- 
 layout: default
-title: final
+title: Final Report
 ---
 This will be exchanged for final vid later
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXTNISa5NKk" frameborder="0" allowfullscreen>
