@@ -22,11 +22,10 @@
 
 # pacmAIn.py 
 #
-# pacmAIn.py 
-#
 # model learned with PPO 
 # Map is a 21 x 21 maze
 # 35 diamonds the agent needs to collect
+
 
 try:
     from malmo import MalmoPython
@@ -58,7 +57,7 @@ class MyModel(TorchModelV2, nn.Module):
         TorchModelV2.__init__(self, *args, **kwargs)
         nn.Module.__init__(self)
 
-        self.obs_size = 21
+        self.obs_size = 17
 
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
         self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
@@ -93,7 +92,7 @@ class Pacman(gym.Env):
         # Static Parameters
         self.runs = 0
         self.size = 20
-        self.obs_size = 21   
+        self.obs_size = 17   
         self.max_episode_steps = 500 # Set back to 500 later
         self.log_frequency = 10
         self.action_dict = {
@@ -135,7 +134,8 @@ class Pacman(gym.Env):
         self.steps = []
         self.diamonds = []
         self.episode_arr = []
-        #self.episode_step_arr = []
+        self.episode_step_arr = []
+        self.episode_wins = []
         
 
     def reset(self):
@@ -151,11 +151,10 @@ class Pacman(gym.Env):
         # Reset Variables
         self.returns.append(self.episode_return)
         current_step = self.steps[-1] if len(self.steps) > 0 else 0
-        self.steps.append(current_step + self.steps_taken)
+        self.steps.append(current_step + self.episode_step)
 
         self.diamonds.append(self.diamonds_collected)    # Diamonds per episode
         self.episode_arr.append(self.episode_number)     # Episode number
-        #self.episode_step_arr.append(self.steps_taken)   #Steps per episode
 
         self.hits_taken = 0
         self.episode_return = 0
@@ -192,37 +191,30 @@ class Pacman(gym.Env):
             done: <bool> indicates terminal state
             info: <dict> dictionary of extra information
         """
-        #performed_command = False
         command = self.action_dict[action]
 
         if (command != 'move 1' or (not self.facing_zombie)):
-            #performed_command = True
             self.agent_host.sendCommand(command)
             time.sleep(.2)
             self.episode_step += 1
 
-            if(self.diamonds_collected <= 52):
+            if(self.diamonds_collected <= 31):
                 self.steps_taken += 1
 
         # Get Observation
         world_state = self.agent_host.getWorldState()
         for error in world_state.errors:
             print("Error:", error.text)
-        self.obs, self.near_zombie = self.get_observation(world_state) 
+        self.obs, self.near_zombie = self.get_observation(world_state)  
 
         # Get Done
-        done = not world_state.is_mission_running 
+        done = not world_state.is_mission_running
 
         # Get Reward
         reward = 0
         for r in world_state.rewards:
             reward += r.getValue()
         
-        # If agent moved and resulted in being closer to diamond
-        #if(command == 'move 1' and performed_command == True and self.near_diamond == True):
-            #print("Right Direction!")
-            #reward += 1
-
         # Checking if agent is near a zombie
         # Reward gets decremeneted if agent is touching zombie
         # Since there's no "RewardForTouchingEntity" we check this by finding the position of the agent and the position of the zombie
@@ -231,12 +223,11 @@ class Pacman(gym.Env):
             reward -= 1   # -1 for getting too close
 
         if(self.took_damage == True):
-            self.hits_taken += 1
             print("Ouch! Took damage!")
-            reward -= 1   # -5 for taking damage
-            if(self.hits_taken == 3):
-                self.agent_host.sendCommand("chat Agent died!")
-                self.agent_host.sendCommand("quit")
+            reward -= 5 # Minus 5 for taking damage
+            self.agent_host.sendCommand("chat Agent died!")
+            self.agent_host.sendCommand("quit")
+            time.sleep(.2)
 
         self.episode_return += reward
 
@@ -246,11 +237,16 @@ class Pacman(gym.Env):
         print("Diamonds collected: {}".format(self.diamonds_collected))
         print()
 
-        if(self.diamonds_collected == 52): # Quit when reaching 52 diamonds or max reward is 52
+        if(self.diamonds_collected == 31 and done != True): # Quit when reaching 52 diamonds or max reward is 52
+            self.episode_step_arr.append(self.steps_taken)
+            self.episode_wins.append(self.episode_number)
+            self.log_steps()
+
             self.agent_host.sendCommand("chat Collected all diamonds!")
             print("Collected all diamonds!\n")
             print("Steps taken: {}\n".format(self.steps_taken))
             self.agent_host.sendCommand("quit")
+            time.sleep(.2)
 
         return self.obs, reward, done, dict()
 
@@ -259,6 +255,7 @@ class Pacman(gym.Env):
         walls = draw_outer_wall()
         inner_walls = draw_inner_wall()
         diamonds = drawDiamond()
+        zombie = draw_zombie()
         return '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
                 <Mission xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
@@ -282,10 +279,10 @@ class Pacman(gym.Env):
                                 walls + \
                                 inner_walls +\
                                 diamonds + \
+                                zombie + \
                                '''
-                                <DrawBlock x='0'  y='1' z='9' type='redstone_block' />
-                                <DrawBlock x='0'  y='1' z='-9' type='grass' />
-                                <DrawEntity x='0.5'  y='2' z='-9.5' type='Zombie' />
+                                <DrawBlock x='0'  y='1' z='8' type='redstone_block' />
+                                <DrawBlock x='0'  y='1' z='-8' type='grass' />
                             </DrawingDecorator>
                             <ServerQuitWhenAnyAgentFinishes/>
                         </ServerHandlers>
@@ -294,7 +291,7 @@ class Pacman(gym.Env):
                     <AgentSection mode="Survival">
                         <Name>CS175Pacman</Name>
                         <AgentStart>
-                            <Placement x="0.5" y="2" z="9.5" pitch="25"/>
+                            <Placement x="0.5" y="2" z="7.5" pitch="25"/>
                             <Inventory>
                                 <InventoryItem slot="0" type="diamond_pickaxe"/>
                             </Inventory>
@@ -323,8 +320,7 @@ class Pacman(gym.Env):
                             <MissionQuitCommands/>
                             <ChatCommands />
                             <RewardForSendingMatchingChatMessage>
-                                <ChatMatch reward="1000" regex="Collected all diamonds!" description="Anything that matches the object."/>
-                                <ChatMatch reward="-1" regex="Agent died!" description="Anything that matches the object."/>
+                                <ChatMatch reward="10" regex="Collected all diamonds!" description="Anything that matches the object."/>
                             </RewardForSendingMatchingChatMessage>
                         </AgentHandlers>
                     </AgentSection>
@@ -487,7 +483,7 @@ class Pacman(gym.Env):
         z_dist = abs(z_dist)
         
         # Considering "Close" to be less than 2 blocks away from the agent. The agent and zombie are practically touching
-        if( (x_dist < 2.0 and x_dist >= 0) and (z_dist < 2.0 and z_dist >= 0)  ):
+        if( (x_dist <= 3.0 and x_dist >= 0) and (z_dist <= 2.0 and z_dist >= 0) or (x_dist <= 2.0 and x_dist >= 0) and (z_dist <= 3.0 and z_dist >= 0) ):
             print("X: {} Z: {}".format(x_dist, z_dist))
             return True
         else:
@@ -534,41 +530,40 @@ class Pacman(gym.Env):
             for step, value in zip(self.episode_arr[1:], self.diamonds[1:]):
                 f.write("{}\t{}\n".format(step, value)) 
     
-    # Graph of episode number vs the amount of reward collected
-    # Used to compare how many rewards agent received per episode
+    # Graphs the episode where it collected all diamonds vs the steps it took
     def log_steps(self):
 
-        box = np.ones(self.log_frequency) / self.log_frequency
-        episode_smooth = np.convolve(self.episode_step_arr[1:], box, mode='same')
+        #box = np.ones(self.log_frequency) / self.log_frequency
+        #episode_smooth = np.convolve(self.episode_step_arr[1:], box, mode='same')
         plt.clf()
-        plt.plot(self.episode_arr[1:], episode_smooth)
+        plt.plot(self.episode_wins, self.episode_step_arr, 'ro')
         plt.title('Pacman: Episodes v. Steps')
         plt.ylabel('Steps Taken')
         plt.xlabel('Episode No.')
         plt.savefig('pacman_steps.png')
 
         with open('pacman_steps.txt', 'w') as f:
-            for step, value in zip(self.episode_arr[1:], self.episode_step_arr[1:]):
+            for step, value in zip(self.episode_wins, self.episode_step_arr):
                 f.write("{}\t{}\n".format(step, value)) 
 
 # Spawn diamonds around the maze
 def drawDiamond():
     diamond = ""
     for x in [-8, -6, -4, -2, 2, 4, 6, 8]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,9)
-        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,9)
+        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,8)
+        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,8)
     
     for x in [-8, -6, -4, -2, 0, 2, 4, 6, 8]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,-9)
-        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,-9)
+        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(x,-8)
+        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(x,-8)
         
-    for z in [-8, -6, -4, -2, 0, 2, 4, 6, 8]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(9,z)
-        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(9,z)
+    for z in [-6, -4, -2, 0, 2, 4, 6]:
+        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(8,z)
+        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(8,z)
 
-    for z in [-8, -6, -4, -2, 0, 2, 4, 6, 8]:
-        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(-9,z)
-        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(-9,z)
+    for z in [-6, -4, -2, 0, 2, 4, 6]:
+        diamond += "<DrawItem x ='{}' y='2' z='{}' type='diamond' />".format(-8,z)
+        diamond += "<DrawBlock x ='{}' y='1' z='{}' type='stained_glass' colour='BLUE' />".format(-8,z)
     return diamond
 
 # Draw the outer wall  28 X 31 maze
@@ -599,35 +594,49 @@ def draw_outer_wall():
 
         outer_wall += "<DrawBlock x ='{}' y='5' z='{}' type='torch' />".format(10,z)
         outer_wall += "<DrawBlock x ='{}' y='5' z='{}' type='torch' />".format(-10,z)
+    
+
 
     return outer_wall
 
 # Draw the inner walls
 def draw_inner_wall():
     inner_wall = ""
-    for x in range(-8, 9):
-        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(x,8)
-        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(x,-8)
-        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(x, 8)
-        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(x, -8)
-        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(x,8)
-        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(x,-8)
+    for x in range(-6, 7):
+        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(x,6)
+        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(x,-6)
+        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(x, 6)
+        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(x, -6)
+        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(x,6)
+        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(x,-6)
         
-    for z in range(-8, 9):
-        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(8,z)
-        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(-8,z)
-        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(8, z)
-        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(-8, z)
-        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(8, z)
-        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(-8,z)
+    for z in range(-6, 7):
+        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(6,z)
+        inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='cobblestone' />".format(-6,z)
+        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(6, z)
+        inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='BLUE' />".format(-6, z)
+        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(6, z)
+        inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='torch' />".format(-6,z)
 
-    for x in range(-7, 8):
-        for z in range(-7, 8):
-            inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='stained_glass' colour='YELLOW' />".format(x, z)
-            inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='YELLOW' />".format(x, z)
+    for x in range(-5, 6):
+        for z in range(-5, 6):
             inner_wall += "<DrawBlock x ='{}' y='2' z='{}' type='torch' />".format(x,z)
+            inner_wall += "<DrawBlock x ='{}' y='3' z='{}' type='stained_glass' colour='YELLOW' />".format(x, z)
+            inner_wall += "<DrawBlock x ='{}' y='4' z='{}' type='stained_glass' colour='YELLOW' />".format(x, z)
+    
 
     return inner_wall
+
+# Randomly draws the zombie in 1 of 3 locations
+def draw_zombie():
+    num = randint(0, 2)
+
+    zombie_xml = ""
+    positions = [(-8.5, 0.5), (0.5, -8.5), (8.5, 0.5)]
+    zombie_xml += "<DrawEntity x='{}'  y='2' z='{}' type='Zombie' />".format(positions[num][0], positions[num][1])
+    #zombie_xml += "<DrawEntity x='{}'  y='2' z='{}' type='Zombie' />".format(-8.5, 8.5)
+    
+    return zombie_xml
 
 
 if __name__ == '__main__':
@@ -644,7 +653,7 @@ if __name__ == '__main__':
         }
     })
 
-    #trainer.restore("C:\\Users\\Presley\\Desktop\\Malmo\\Python_Examples\\checkpoint_47\\checkpoint-47")
+    #trainer.restore("C:\\Users\\Presley\\Desktop\\Malmo\\Python_Examples\\checkpoint_39\\checkpoint-39")
 
     i = 0
     while True:
