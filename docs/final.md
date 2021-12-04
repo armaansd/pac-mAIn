@@ -15,10 +15,10 @@ This will be exchanged for final vid later
 
 <p>The goal of this project is to create the environment ourselves and implement and compare more than one algorithm. We will evaluate our agent based on several metrics.</p>
 
-### Environement Setup
+#### Environement Setup
 <p>We made some changes to the environment since the proposal. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
 
-### Environment
+#### Environment
 - Enclosed 21 x 21 Map
 - 31 Diamonds
 - Zombie spawned in 3 random locations on the map
@@ -26,7 +26,7 @@ This will be exchanged for final vid later
 
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
-### Rewards
+#### Rewards
 We defined the following rewards:
 - Collecting Diamond +1
 - Near Zombie -1
@@ -37,14 +37,14 @@ We defined the following rewards:
 
 <H2 align=left>Approach</H2>
 
-## Algorithm Used: PPO
+#### Algorithm Used: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
 PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
-## Diagram of PPO architecture from RLlib's algorithm website 
+#### Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
-### Observation Space
+#### Observation Space
 <p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. To preserve spatial information, we defined a custom NN model with three convutional layers. </p>
 
 ```python
@@ -84,7 +84,7 @@ class MyModel(TorchModelV2, nn.Module):
   
 We used discrete actions and defined the action space for PPO as follows:
 
-### Action Space
+#### Action Space
 ``` python 
 self.action_dict = {
     0: 'move 1', 
@@ -93,7 +93,7 @@ self.action_dict = {
     3: 'move 1.5', 
 }
 ```
-### Adjusting Observations
+#### Adjusting Observations
 <p>Because our agent and the zombie are moving entities, their positions on the grid will change as they move around on the map. Diamonds will also disappear from the map as they are collected by the agent. Thus, we defined our observations with ObservationFromNearbyEntities and ObservationFromGrid. To adjust the observation grid in relation to the agent, we used the following equation. </p>
 
 ```python
