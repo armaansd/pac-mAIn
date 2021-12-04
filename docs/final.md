@@ -110,12 +110,14 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
 ##### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
-<img src="https://user-images.githubusercontent.com/75513952/144726932-a0cdcead-2edb-4113-81c1-c62e0f2d361e.png" width="700" height="500">
+
+<img src="https://user-images.githubusercontent.com/75513952/144727105-9adcead7-d67e-4a30-b8cb-9483b7f009c3.png" width="700" height="500">
+
 
 ### Steps taken to reach solution
-- Max: 327
+- Max: 251
 - Min: 58
-- Avg: 102
+- Avg: 101
 
 <H2>Resources Used</H2>
 
