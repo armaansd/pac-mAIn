@@ -32,23 +32,31 @@ This will be exchanged for final vid later
 
 # Approach
 ## Algorithm Used: PPO
-<p>One of the algorithms we are exploring is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from actions that it took using its current optimized policy and then updates its optimized policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. </p>
+<p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. </p>
 
-<p>In our scenario, an 2 x 25 x 25 observation grid for entities near the agent will be generated. Diamonds will be enumerated with the value of 1. Zombies will be enumerated with a value of -1. Since diamonds will be removed from the map whenever the agent picks it up, an observation grid for entities is needed instead of for blocks around the agent. Adjusting the index of the item according to the agent will help update the agent's obervation, reward, and states to update its next policy.</p>
+### Observation Space
+<p>In our scenario, we used a 3 x 17 x 17 observation grid for entities near the agent will be generated. Diamonds will be enumerated with the value of 1. Zombies will be enumerated with a value of -1. Since diamonds will be removed from the map whenever the agent picks it up, an observation grid for entities is needed instead of for blocks around the agent. Adjusting the index of the item according to the agent will help update the agent's obervation, reward, and states to update its next policy.</p>
   
 We used discrete actions and defined the action space for PPO as follows:
 
 ### Action Space
-- Move +1 -> Move 1 block forward
-- Turn +1 -> Turn 90 degrees right
-- Turn -1 -> Turn 90 degrees left
+''' python 
+self.action_dict = {
+    0: 'move 1', 
+    1: 'turn 1',  
+    2: 'turn -1', 
+    3: 'move 1.5', 
+}
+'''
 
 ## Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 ## PPO defines a probability ratio between its new policy and old policy
+'''python
 - r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
+'''
 
 ## Objective function of PPO
 <img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="70">
