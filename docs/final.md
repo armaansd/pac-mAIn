@@ -8,16 +8,15 @@ This will be exchanged for final vid later
 
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
-# Project Summary
-<p>The goal of our project is to train our agent to play a modified recreation of Pac-Man on Minecraft. The goal of our agent is to obtain the highest score for the given map. The pellets from the original game will be substituted with diamonds. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 35 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
 
-<p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets attacked by the zombie, agent will "die" and received a penalty score.</p>
+# Pac-mAIn Project Summary
+<p>The goal of our project is to train an agent to play a modified version of Pac-Man on Minecraft. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie or enemy agent. The agent's score will be based on how many diamonds they collect in a given episode. The goal of our agent is to obtain the highest score for the given map, which is 31 diamonds. The agent will also have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets touched by the zombie, agent will "die" and received a penalty score. We will develop our AI using the Malmo platform.</p>
 
-<p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
+<p>The goal of this project is to create the environment ourselves and implement and compare more than one algorithm. We will evaluate our agent based on several metrics.</p>
 
 
 ### Environement Setup
-We made some changes to the environment. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives. Thus, it learned to stand around instead of explore. Thus we added more walking space for the agent. 
+<p>We made some changes to the environment since the proposal. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
 
 - 21 x 21 Map
 - 31 Diamonds
