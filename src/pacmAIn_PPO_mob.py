@@ -59,9 +59,9 @@ class MyModel(TorchModelV2, nn.Module):
 
         self.obs_size = 17
 
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
-        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 3 channels
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) 
+        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1)
 
         self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) # According to action space size
         self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
@@ -71,19 +71,19 @@ class MyModel(TorchModelV2, nn.Module):
     def forward(self, input_dict, state, seq_lens):
         x  = input_dict['obs'] # BATCH, 3, self.obs_size, self.obs_size
 
-        x = F.relu(self.conv1(x)) # BATCH 32, self.obs_size, self.obs_size 
-        x = F.relu(self.conv2(x)) # BATCH 32, self.obs_size, self.obs_size 
-        x = F.relu(self.conv3(x)) # BATCH 32, self.obs_size, self.obs_size 
+        x = F.relu(self.conv1(x)) 
+        x = F.relu(self.conv2(x))  
+        x = F.relu(self.conv3(x)) 
 
-        x = x.flatten(start_dim=1) # BATCH, 800
+        x = x.flatten(start_dim=1) 
 
-        policy = self.policy_layer(x) # BATCH, 3
-        self.value = self.value_layer(x) # BATCH, 1
+        policy = self.policy_layer(x) 
+        self.value = self.value_layer(x) 
 
         return policy, state
     
     def value_function(self):
-        return self.value.squeeze(1) # BATCH
+        return self.value.squeeze(1) 
 
 
 class Pacman(gym.Env):
