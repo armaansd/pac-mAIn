@@ -101,8 +101,15 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 # Where X and Z are the x and z coordinates of the entity and x and z are the x and z coordinates of the agent
 ```
 
-<H2 align=left>Evaluation PPO</H2>
+<H2 align=left>Evaluation</H2>
 
+#### PPO 
+
+<img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="500" height="300">
+
+<img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="500" height="300">
+
+<img src="https://user-images.githubusercontent.com/75513952/144725754-078f5e84-bd75-4e46-b05c-9e12595e34da.png" width="500" height="300">
 
 
 <H2>Resources Used</H2>
