@@ -11,11 +11,11 @@ title:  Home
 
 <p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
 
-<img src="https://user-images.githubusercontent.com/75513952/143676889-5ba0d833-10fb-4568-87b7-7dbb9cb87a60.png" width="1000" height="700">
 
-<img src="https://user-images.githubusercontent.com/75513952/143676641-45fbcbaf-842f-4e17-808b-c54a588448a0.png" width="700" height="500">
-<img src="https://user-images.githubusercontent.com/75513952/143676574-9cbbb382-7f74-49aa-b04b-06b1dbf32708.png" width="700" height="500">
-<img src="https://user-images.githubusercontent.com/75513952/143676588-5da81454-81ae-4428-adb4-72fdf4013a3e.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
+<img src="https://user-images.githubusercontent.com/75513952/144721196-a181fdb6-e224-46f8-89c8-f8b841001e1e.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144721214-fc78789b-1386-41cd-9333-d64194b9af1b.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144721228-0c75c8dd-959e-4998-82a2-fb055386e1da.png" width="700" height="500">
 
 
 ## Source code: 
