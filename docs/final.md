@@ -44,7 +44,7 @@ PPO is a on-policy algorithm, meaning that it explores by sampling actions based
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 ### Observation Space
-<p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. To preserve spacial information, we defined a custom NN model with three convutional layers. </p>
+<p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. To preserve spatial information, we defined a custom NN model with three convutional layers. </p>
 
 ```python
 class MyModel(TorchModelV2, nn.Module):
