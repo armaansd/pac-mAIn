@@ -33,10 +33,44 @@ This will be exchanged for final vid later
 # Approach
 ## Algorithm Used: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. Eventually this causes the agent to exploit already discovered rewards. </p>
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its stochastic policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
 ### Observation Space
-<p>In our scenario, we used a 3 x 17 x 17 observation grid for entities near the agent will be generated. Diamonds will be enumerated with the value of 1. Zombies will be enumerated with a value of -1. Since diamonds will be removed from the map whenever the agent picks it up, an observation grid for entities is needed instead of for blocks around the agent. Adjusting the index of the item according to the agent will help update the agent's obervation, reward, and states to update its next policy.</p>
+<p>In our scenario, we used a 3 x 17 x 17 observation grid for the agent. There are 3 channels: one for diamonds, one for zombie and one for walls. To make use of spacial information, we implemented a simple NN model with 3 layers. </p>
+
+```python
+class MyModel(TorchModelV2, nn.Module):
+    def __init__(self, *args, **kwargs):
+        TorchModelV2.__init__(self, *args, **kwargs)
+        nn.Module.__init__(self)
+
+        self.obs_size = 17
+
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) 
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) 
+        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) 
+
+        self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) 
+        self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
+
+        self.value = None
+    
+    def forward(self, input_dict, state, seq_lens):
+        x  = input_dict['obs'] # BATCH, 3, self.obs_size, self.obs_size
+
+        x = F.relu(self.conv1(x)) 
+        x = F.relu(self.conv2(x))  
+        x = F.relu(self.conv3(x)) 
+        x = x.flatten(start_dim=1)
+
+        policy = self.policy_layer(x) 
+        self.value = self.value_layer(x) 
+
+        return policy, state
+    
+    def value_function(self):
+        return self.value.squeeze(1) 
+```
   
 We used discrete actions and defined the action space for PPO as follows:
 
@@ -55,7 +89,7 @@ self.action_dict = {
 
 ## PPO defines a probability ratio between its new policy and old policy
 ```python
-- r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
+r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
 ```
 
 ## Objective function of PPO
