@@ -62,7 +62,8 @@ class MyModel(TorchModelV2, nn.Module):
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 3 channels
         self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) 
         self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1)
-
+        
+        # input is flattened
         self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) # According to action space size
         self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
 
