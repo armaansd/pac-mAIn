@@ -21,6 +21,8 @@ This will be exchanged for final vid later
 - 21 x 21 Map
 - 31 Diamonds
 - Zombie spawned in 3 random locations on the map
+
+
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
 ### Rewards
