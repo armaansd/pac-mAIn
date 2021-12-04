@@ -41,22 +41,22 @@ PPO is a on-policy algorithm, meaning that it explores by sampling actions based
 We used discrete actions and defined the action space for PPO as follows:
 
 ### Action Space
-''' python 
+``` python 
 self.action_dict = {
     0: 'move 1', 
     1: 'turn 1',  
     2: 'turn -1', 
     3: 'move 1.5', 
 }
-'''
+```
 
 ## Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
 
 ## PPO defines a probability ratio between its new policy and old policy
-'''python
+```python
 - r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
-'''
+```
 
 ## Objective function of PPO
 <img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="70">
