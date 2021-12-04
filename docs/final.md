@@ -3,17 +3,18 @@ layout: default
 title: Final Report
 ---
 This will be exchanged for final vid later
+<H2 align=left>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXTNISa5NKk" frameborder="0" allowfullscreen>
-</iframe>
+</iframe> 
+</H2>
+
 
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
-
-# Pac-mAIn Project Summary
+<H2 align = left>Pac-mAIn Project Summary</H2>
 <p>The goal of our project is to train an agent to play a modified version of Pac-Man on Minecraft. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie or enemy agent. The agent's score will be based on how many diamonds they collect in a given episode. The goal of our agent is to obtain the highest score for the given map, which is 31 diamonds. The agent will also have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets touched by the zombie, agent will "die" and received a penalty score. We will develop our AI using the Malmo platform.</p>
 
 <p>The goal of this project is to create the environment ourselves and implement and compare more than one algorithm. We will evaluate our agent based on several metrics.</p>
-
 
 ### Environement Setup
 <p>We made some changes to the environment since the proposal. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
@@ -35,7 +36,7 @@ We defined the following rewards:
 - Collecting all diamonds +100
 
 
-# Approach
+<H2 align=left>Approach</H2>
 ## Algorithm Used: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
 PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
@@ -100,8 +101,11 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 # Where X and Z are the x and z coordinates of the entity and x and z are the x and z coordinates of the agent
 ```
 
+<H2 align=left>Evaluation PPO</H2>
 
-### Resources Used 
+
+
+<H2>Resources Used</H2>
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>    
