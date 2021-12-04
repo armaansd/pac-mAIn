@@ -21,13 +21,15 @@ We made some changes to the environment. Because the agent is enclosed with wall
 
 - 21 x 21 Map
 - 31 Diamonds
+- Zombie spawned in 3 random locations on the map
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
 ### Rewards
 - Diamond +1
 - Near Zombie -1
-- Damage by Zombie -5
+- Touched by Zombie -5
 - Touching wall -10
+- Collecting all diamonds +100
 
 # Approach
 ## Algorithm Used: PPO
