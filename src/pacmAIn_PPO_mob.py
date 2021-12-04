@@ -24,7 +24,7 @@
 #
 # model learned with PPO 
 # Map is a 21 x 21 maze
-# 35 diamonds the agent needs to collect
+# 31 diamonds the agent needs to collect
 
 
 try:
@@ -51,7 +51,7 @@ from ray.rllib.agents import ppo
 from ray.rllib.models import ModelCatalog
 from ray.rllib.models.torch.torch_modelv2 import TorchModelV2
 
-
+# Simple NN model with 3 layers
 class MyModel(TorchModelV2, nn.Module):
     def __init__(self, *args, **kwargs):
         TorchModelV2.__init__(self, *args, **kwargs)
@@ -63,7 +63,7 @@ class MyModel(TorchModelV2, nn.Module):
         self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
         self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size 
 
-        self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 3)
+        self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) # According to action space size
         self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
 
         self.value = None
@@ -99,6 +99,7 @@ class Pacman(gym.Env):
             0: 'move 1',  # Move one block forward
             1: 'turn 1',  # Turn 90 degrees to the right
             2: 'turn -1',  # Turn 90 degrees to the left
+            3: 'move 1.5', 
         }
 
         # Rllib Parameters
@@ -121,6 +122,7 @@ class Pacman(gym.Env):
         #self.near_diamond = False
         self.facing_zombie = False # If agent is facing zombie
         self.took_damage = False   # Used to check if agent took damage
+        self.touched = False
         self.hits_taken = 0
 
         self.damage_taken = 0  # Damage taken
@@ -165,6 +167,7 @@ class Pacman(gym.Env):
         self.damage_taken = 0
         self.facing_zombie = False
         self.took_damage = False
+        self.touched = False
 
         # Log
         if len(self.returns) > self.log_frequency + 1 and \
@@ -193,7 +196,7 @@ class Pacman(gym.Env):
         """
         command = self.action_dict[action]
 
-        if (command != 'move 1' or (not self.facing_zombie)):
+        if (command[0:4] != 'move' or (not self.facing_zombie)):
             self.agent_host.sendCommand(command)
             time.sleep(.2)
             self.episode_step += 1
@@ -222,8 +225,9 @@ class Pacman(gym.Env):
             print("Too close to Zombie!!\n")
             reward -= 1   # -1 for getting too close
 
-        if(self.took_damage == True):
-            print("Ouch! Took damage!")
+        if(self.touched == True or self.took_damage == True):
+            #print("Ouch! Took damage!")
+            print("Agent touched zombie!\n")
             reward -= 5 # Minus 5 for taking damage
             self.agent_host.sendCommand("chat Agent died!")
             self.agent_host.sendCommand("quit")
@@ -320,7 +324,7 @@ class Pacman(gym.Env):
                             <MissionQuitCommands/>
                             <ChatCommands />
                             <RewardForSendingMatchingChatMessage>
-                                <ChatMatch reward="10" regex="Collected all diamonds!" description="Anything that matches the object."/>
+                                <ChatMatch reward="100" regex="Collected all diamonds!" description="Anything that matches the object."/>
                             </RewardForSendingMatchingChatMessage>
                         </AgentHandlers>
                     </AgentSection>
@@ -415,7 +419,11 @@ class Pacman(gym.Env):
                         obs[self.obs_size ** 2 + math.floor(x) + math.floor(z) * self.obs_size] = -1 
                 
                 # Get wall locations
-                grid = observations['floorAll']
+                try:
+                    grid = observations['floorAll']
+                except:
+                    continue
+
                 for i, x in enumerate(grid):
                     if(x == 'cobblestone'):
                         obs[2 * (self.obs_size ** 2) + i] = -2
@@ -481,6 +489,9 @@ class Pacman(gym.Env):
 
         x_dist = abs(x_dist)
         z_dist = abs(z_dist)
+
+        if( (x_dist <= 1.5 and x_dist >= 0) and (z_dist <= 1.5 and z_dist >= 0)):
+            self.touched = True
         
         # Considering "Close" to be less than 2 blocks away from the agent. The agent and zombie are practically touching
         if( (x_dist <= 3.0 and x_dist >= 0) and (z_dist <= 2.0 and z_dist >= 0) or (x_dist <= 2.0 and x_dist >= 0) and (z_dist <= 3.0 and z_dist >= 0) ):
@@ -488,6 +499,7 @@ class Pacman(gym.Env):
             return True
         else:
             return False
+
         
     # Logs total returns vs total steps
     def log_returns(self):
@@ -536,7 +548,7 @@ class Pacman(gym.Env):
         #box = np.ones(self.log_frequency) / self.log_frequency
         #episode_smooth = np.convolve(self.episode_step_arr[1:], box, mode='same')
         plt.clf()
-        plt.plot(self.episode_wins, self.episode_step_arr, 'ro')
+        plt.plot(self.episode_wins, self.episode_step_arr)
         plt.title('Pacman: Episodes v. Steps')
         plt.ylabel('Steps Taken')
         plt.xlabel('Episode No.')
@@ -653,7 +665,7 @@ if __name__ == '__main__':
         }
     })
 
-    #trainer.restore("C:\\Users\\Presley\\Desktop\\Malmo\\Python_Examples\\checkpoint_39\\checkpoint-39")
+    #trainer.restore("C:\\Users\\Presley\\Desktop\\Malmo\\Python_Examples\\checkpoint_60\\checkpoint-60")
 
     i = 0
     while True:
