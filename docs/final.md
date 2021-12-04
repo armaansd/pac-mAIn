@@ -93,7 +93,8 @@ self.action_dict = {
 <p>Because our agent and the zombie are moving entities, their positions on the grid will change as they move around on the map. Diamonds will also disappear from the map as they are collected by the agent. Thus, we defined our observations with ObservationFromNearbyEntities and ObservationFromGrid. To adjust the observation grid in relation to the agent, we used the following equation. </p>
 
 ```python
-index = math.floor((self.obs_size**2)/2) + math.floor( Entity_x_pos - Agent_x_pos) + math.floor(Entity_z_pos - Agent_z_pos) * self.obs_size
+index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * self.obs_size
+# Where X and Z are the x and z coordinates of the entity and x and z are the x and z coordinates of the agent
 ```
 ## Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
