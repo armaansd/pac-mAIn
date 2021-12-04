@@ -6,7 +6,7 @@ This will be exchanged for final vid later
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GXTNISa5NKk" frameborder="0" allowfullscreen>
 </iframe>
 
-<img src="https://user-images.githubusercontent.com/75513952/144721258-d8f68ed8-4840-4440-a8df-c802b0d4ff22.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
 # Project Summary
 <p>The goal of our project is to train our agent to play a modified recreation of Pac-Man on Minecraft. The goal of our agent is to obtain the highest score for the given map. The pellets from the original game will be substituted with diamonds. The agent's score will be based on how many diamonds they collect in a given episode. There will be a total of 35 diamonds for the agent to collect. We will develop our AI using Malmo. </p>
