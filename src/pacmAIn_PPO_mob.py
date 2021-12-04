@@ -59,12 +59,11 @@ class MyModel(TorchModelV2, nn.Module):
 
         self.obs_size = 17
 
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 3 channels
-        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) 
-        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1)
-        
-        # input is flattened
-        self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) # According to action space size
+        self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size
+        self.conv3 = nn.Conv2d(32, 32, kernel_size=3, padding=1) # 32, self.obs_size, self.obs_size
+
+        self.policy_layer = nn.Linear(32*self.obs_size*self.obs_size, 4) # input is flattened, action size 4
         self.value_layer = nn.Linear(32*self.obs_size*self.obs_size, 1)
 
         self.value = None
@@ -72,11 +71,11 @@ class MyModel(TorchModelV2, nn.Module):
     def forward(self, input_dict, state, seq_lens):
         x  = input_dict['obs'] # BATCH, 3, self.obs_size, self.obs_size
 
-        x = F.relu(self.conv1(x)) 
-        x = F.relu(self.conv2(x))  
-        x = F.relu(self.conv3(x)) 
-
-        x = x.flatten(start_dim=1) 
+        x = F.relu(self.conv1(x)) # BATCH, 32, self.obs_size, self.obs_size
+        x = F.relu(self.conv2(x))  # BATCH, 32, self.obs_size, self.obs_size
+        x = F.relu(self.conv3(x)) # BATCH, 32, self.obs_size, self.obs_size
+        
+        x = x.flatten(start_dim=1) # Flattened
 
         policy = self.policy_layer(x) 
         self.value = self.value_layer(x) 
