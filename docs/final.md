@@ -17,23 +17,22 @@ This will be exchanged for final vid later
 
 ### Environement Setup
 <p>We made some changes to the environment since the proposal. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
-<p>
-- 21 x 21 Map
-- 31 Diamonds
-- Zombie spawned in 3 random locations on the map
-</p>
+
+<p>- 21 x 21 Map</p>
+<p>- 31 Diamonds</p>
+<p>- Zombie spawned in 3 random locations on the map</p>
+
 
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
 ### Rewards
-<p>
 We defined the following rewards:
 - Collecting Diamond +1
 - Near Zombie -1
 - Touched by Zombie -5
 - Touching wall -10
 - Collecting all diamonds +100
-</p>
+
 
 # Approach
 ## Algorithm Used: PPO
