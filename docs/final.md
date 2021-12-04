@@ -40,6 +40,19 @@ We defined the following rewards:
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
 PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
+## Diagram of PPO architecture from RLlib's algorithm website 
+<img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
+
+## PPO defines a probability ratio between its new policy and old policy
+```python
+r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
+
+## Objective function of PPO
+<img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="70">
+
+<p>PPO uses a on-policy update and clips the gradient descent step so learning is improved. The PPO objective function takes the minimum value between the original value and the clipped value. Positive advantage function means good action and negative advantage means bad action.</p>
+
+```
 ### Observation Space
 <p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. To preserve spacial information, we defined a custom NN model with three convutional layers. </p>
 
@@ -96,18 +109,6 @@ self.action_dict = {
 index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * self.obs_size
 # Where X and Z are the x and z coordinates of the entity and x and z are the x and z coordinates of the agent
 ```
-## Diagram of PPO architecture from RLlib's algorithm website 
-<img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
-
-## PPO defines a probability ratio between its new policy and old policy
-```python
-r(θ) = π<sub>θ</sub>(a given s) / π<sub>θold</sub>(a given s)
-```
-
-## Objective function of PPO
-<img src="https://user-images.githubusercontent.com/75513952/142361980-722dc284-2fc0-40b4-aafa-bf2faa33000a.png" width="800" height="70">
-
-<p>PPO uses a on-policy update and clips the gradient descent step so learning is improved. The PPO objective function takes the minimum value between the original value and the clipped value. Positive advantage function means good action and negative advantage means bad action.</p>
 
 
 ### Resources Used 
