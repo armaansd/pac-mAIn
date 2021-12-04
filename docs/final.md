@@ -112,7 +112,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 #### Steps to find the solution
 
 <p>The following graph shows the steps for the episodes where the agent was able to collect all the diamonds </p>
-<img src="https://user-images.githubusercontent.com/75513952/144726740-2ba7fcfd-d461-42e9-a92b-4da16c4eeef2.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144726740-2ba7fcfd-d461-42e9-a92b-4da16c4eeef2.png" width="1000" height="700">
 
 
 <H2>Resources Used</H2>
