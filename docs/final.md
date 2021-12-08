@@ -124,25 +124,25 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 
 #### PPO Map 2
 
-![2021-12-08_15 05 17](https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png)
+<img src="https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png" width="500" height="400">
 
 
 <p>We also tested our model on a map where the agent has multiple path options available. There are now 38 diamonds for the agent to collect.</p> 
 
+<img src="https://user-images.githubusercontent.com/75513952/145306472-cb10c674-b634-40cc-8380-c3ca1614577e.png" width="700" height="500">
 
-<img src="https://user-images.githubusercontent.com/75513952/145303246-8a850c7c-3aea-43a9-9ce6-c7a6c5908721.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/145305836-7a6981e5-6811-4843-9ac9-293c8289a5a2.png" width="700" height="500">
 
-<img src="https://user-images.githubusercontent.com/75513952/145303252-5a8a1966-6267-4676-8760-a8cfe434a235.png" width="700" height="500">
 
 ##### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
 
-<img src="https://user-images.githubusercontent.com/75513952/145303263-6dcdbde9-7854-42bf-ba19-09f9621e39f2.png" width="700" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/145306318-938d5c17-acda-4f5d-b642-3881dbebe621.png" width="700" height="500">
 
 
 ### Steps taken to reach solution
-- Max: 327
-- Min: 58
-- Avg: 103
+- Max: 493
+- Min: 88
+- Avg: 198.5
 
 
 <H2>Resources Used</H2>
