@@ -103,16 +103,16 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 
 <H2 align=left>Evaluation</H2>
 
-#### PPO Map 1
+## PPO Map 1
 
-![2021-12-04_10 42 10](https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png)
+<img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="500" height="400">
 
 
 <img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="700" height="500">
 
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
-##### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
+#### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
 
 <img src="https://user-images.githubusercontent.com/75513952/144727105-9adcead7-d67e-4a30-b8cb-9483b7f009c3.png" width="700" height="500">
 
@@ -122,7 +122,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 - Min: 58
 - Avg: 101
 
-#### PPO Map 2
+## PPO Map 2
 
 <img src="https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png" width="500" height="400">
 
@@ -134,7 +134,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <img src="https://user-images.githubusercontent.com/75513952/145305836-7a6981e5-6811-4843-9ac9-293c8289a5a2.png" width="700" height="500">
 
 
-##### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
+#### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
 
 <img src="https://user-images.githubusercontent.com/75513952/145306318-938d5c17-acda-4f5d-b642-3881dbebe621.png" width="700" height="500">
 
