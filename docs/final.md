@@ -25,7 +25,8 @@ This will be exchanged for final vid later
 
 
 
-<p></p>
+
+
 
 
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
