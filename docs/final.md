@@ -48,11 +48,15 @@ This will be exchanged for final vid later
 
 ### Rewards
 We defined the following rewards:
+
+Positive rewards
 - Collecting Diamond +1
+- Collecting all diamonds +100
+
+Negative Rewards
 - Near Zombie -1
 - Touched/damaged by Zombie -5
 - Touching wall -10
-- Collecting all diamonds +100
 
 
 <H2 align=left>Approach</H2>
@@ -60,9 +64,9 @@ We defined the following rewards:
 <p>Our minecraft agent was developed on Malmo. We trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
 
-### Approach 1: Algorithm Used: PPO
+### Baseline Approach: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on the latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on.</p>
 
 PPO uses the update function:
 
@@ -132,7 +136,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 ```
 
 
-### Approach 2: Algorithm used: Q-Learning
+### Approach 2: Q-Learning
 <p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed.</p>
 
 ![image](https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png)
