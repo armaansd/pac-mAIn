@@ -12,11 +12,11 @@ This will be exchanged for final vid later
 
 <H2 align = left>Pac-mAIn Project Summary</H2>
 
-Project background: 
+#### Project background: 
 
 <p>Suppose a Minecraft player wanted to collect items around the map and is aware that there are hostile mobs nearby. This scenario is similar to the setup of PacMan; a player collects items in a maze while evading enemies. Thus, we framed our project around this setup.</p>
 
-Goal: 
+#### Goal: 
   
 <p>The goal of our project is to train our agent to play a modified version of Pac-Man on Minecraft. We will develop our AI using the Malmo platform. The agent will be placed in a maze to explore. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie. The agent's score will be based on how many diamonds they collect in a given episode. The agent will "win" if it is able to collect all diamonds.</p>
     
