@@ -25,10 +25,10 @@ This will be exchanged for final vid later
 
 <p>We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.</p>
 
-#### Environement Setup
+### Environement Setup
 <p>Comapared to the previous version of the map in the status report, we made some changes to the environment. Because the agent is enclosed by walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
 
-#### Environment
+### Environment
 - Enclosed 21 x 21 Map
 - 31 Diamonds
 - Zombie spawned randomly in one of three locations on the map. 
@@ -36,7 +36,7 @@ This will be exchanged for final vid later
 ##### Below is the layout of Map 1 
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
-#### Rewards
+### Rewards
 We defined the following rewards:
 - Collecting Diamond +1
 - Near Zombie -1
