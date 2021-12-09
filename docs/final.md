@@ -23,6 +23,8 @@ This will be exchanged for final vid later
 
 <p>We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.</p>
 
+
+
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
 
@@ -34,6 +36,8 @@ This will be exchanged for final vid later
 - Enclosed 21 x 21 Map
 - 31 Diamonds
 - Zombie spawned randomly in one of three locations on the map. 
+
+
 
 ##### Below is the layout of Map 1 
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
