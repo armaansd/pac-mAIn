@@ -66,7 +66,7 @@ PPO is a on-policy algorithm, meaning that it explores by sampling actions based
 
 RLlib PPO uses the update function:
 
-<img src="https://user-images.githubusercontent.com/75513952/145362880-df9c5a00-04a8-4de1-820c-b28acd98d030.png" width="400" height="25">
+<img src="https://user-images.githubusercontent.com/75513952/145362880-df9c5a00-04a8-4de1-820c-b28acd98d030.png" width="400" height="50">
 
 #### Observation Space
 <p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. 
