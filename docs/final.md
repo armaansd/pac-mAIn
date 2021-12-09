@@ -24,11 +24,6 @@ This will be exchanged for final vid later
 <p>We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.</p>
 
 
-
-
-
-
-
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
 
@@ -78,8 +73,8 @@ where r(θ) is the ratio of the current policy and the old policy
 
 
 #### Observation Space
-<p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. 
-  To preserve spatial information, we defined a custom NN model with three convutional layers. </p>
+<p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks.</p>
+<p>To preserve spatial information, we defined a custom NN model with three convutional layers. </p>
 
 ```python
 class MyModel(TorchModelV2, nn.Module):
@@ -135,6 +130,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 # Where X and Z are the x,z coordinates of the entity and x and z are the x,z coordinates of the agent
 ```
 
+<p>After updating the observation array, the distance between the agent and zombie are checked. If the agent and the zombie are within touching distance or has been attacked by the zombie, the agent is considered to be "dead" and the mission will end.</p>
 
 ### Approach 2: Q-Learning
 <p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed.</p>
