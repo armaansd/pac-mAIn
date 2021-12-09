@@ -57,15 +57,72 @@ We defined the following rewards:
 
 <H2 align=left>Approach</H2>
 
-<p>Our minecraft agent was developed on Malmo. We implemented and trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
+<p>Our minecraft agent was developed on Malmo. We trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
 
 ### Approach 1: Algorithm Used: PPO
-<p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
+<p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
-#### Diagram of PPO architecture from RLlib's algorithm website 
-<img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
+RLlib PPO uses the update function 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>L</mi>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mi>C</mi>
+      <mi>L</mi>
+      <mi>I</mi>
+      <mi>P</mi>
+    </mrow>
+  </msup>
+  <mo stretchy="false">(</mo>
+  <mi>&#x03B8;<!-- θ --></mi>
+  <mo stretchy="false">)</mo>
+  <mo>=</mo>
+  <mi>E</mi>
+  <mo stretchy="false">[</mo>
+  <mi>m</mi>
+  <mi>i</mi>
+  <mi>n</mi>
+  <mo stretchy="false">(</mo>
+  <mi>r</mi>
+  <mo stretchy="false">(</mo>
+  <mi>&#x03B8;<!-- θ --></mi>
+  <mo stretchy="false">)</mo>
+  <msub>
+    <mi>A</mi>
+    <mi>t</mi>
+  </msub>
+  <mo>,</mo>
+  <mi>c</mi>
+  <mi>l</mi>
+  <mi>i</mi>
+  <mi>p</mi>
+  <mo stretchy="false">(</mo>
+  <msub>
+    <mi>r</mi>
+    <mi>t</mi>
+  </msub>
+  <mo stretchy="false">(</mo>
+  <mi>&#x03B8;<!-- θ --></mi>
+  <mo stretchy="false">)</mo>
+  <mo>,</mo>
+  <mn>1</mn>
+  <mo>&#x2212;<!-- − --></mo>
+  <mi>&#x03F5;<!-- ϵ --></mi>
+  <mo>,</mo>
+  <mn>1</mn>
+  <mo>+</mo>
+  <mi>&#x03F5;<!-- ϵ --></mi>
+  <mo stretchy="false">)</mo>
+  <msub>
+    <mi>A</mi>
+    <mi>t</mi>
+  </msub>
+  <mo stretchy="false">)</mo>
+  <mo stretchy="false">]</mo>
+</math>
+
 
 #### Observation Space
 <p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. 
