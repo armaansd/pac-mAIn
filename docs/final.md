@@ -56,9 +56,9 @@ We defined the following rewards:
 <p>Our minecraft agent was developed on Malmo. We implemented and trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
 
-#### Algorithm Used: PPO
+### Approach 1: Algorithm Used: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the observations and reward states with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
 #### Diagram of PPO architecture from RLlib's algorithm website 
 <img src="https://user-images.githubusercontent.com/75513952/142348893-9389ccb9-e4f3-40da-83f1-b252248ae35c.png" width="800" height="300">
@@ -118,8 +118,17 @@ self.action_dict = {
 
 ```python
 index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * self.obs_size
-# Where X and Z are the x and z coordinates of the entity and x and z are the x and z coordinates of the agent
+# Where X and Z are the x,z coordinates of the entity and x and z are the x,z coordinates of the agent
 ```
+
+
+### Approach 2: Algorithm used: Q-Learning
+<p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed.</p>
+
+![image](https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png)
+
+
+
 
 <H2 align=left>Evaluation</H2>
 
