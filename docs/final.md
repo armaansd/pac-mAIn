@@ -70,7 +70,7 @@ PPO uses the update function:
 
 where r(θ) is the ratio of the current policy and the old policy
 
-<img src="https://user-images.githubusercontent.com/75513952/145363405-8d41a536-864d-4d2d-9a68-feaf5c48e474.png" width="500" height="50">
+<img src="https://user-images.githubusercontent.com/75513952/145363405-8d41a536-864d-4d2d-9a68-feaf5c48e474.png" width="300" height="50">
 
 
 #### Observation Space
