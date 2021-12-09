@@ -11,31 +11,40 @@ This will be exchanged for final vid later
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
 
 <H2 align = left>Pac-mAIn Project Summary</H2>
-<p>The goal of our project is to train an agent to play a modified version of Pac-Man on Minecraft. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie or enemy agent. The agent's score will be based on how many diamonds they collect in a given episode. The goal of our agent is to obtain the highest score for the given map, which is 31 diamonds. The agent will also have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie it will receive a penalty score. If it gets touched by the zombie, agent will "die" and received a penalty score. We will develop our AI using the Malmo platform.</p>
+<p>Project background: 
+Suppose a Minecraft player wanted to collect items around the map and is aware that there are hostile mobs nearby. This scenario is similar to the setup of PacMan; a player collects items in a maze while evading enemies. Thus, we framed our project around this setup.  
 
-<p>The goal of this project is to create the environment ourselves and implement and compare more than one algorithm. We will evaluate our agent based on several metrics.</p>
+Goal: 
+The goal of our project is to train our agent to play a modified version of Pac-Man on Minecraft. We will develop our AI using the Malmo platform. The agent will be placed in a maze to explore. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie. The agent's score will be based on how many diamonds they collect in a given episode. The agent will "win" if it is able to collect all diamonds. 
+    
+Of course, this project would be trivial if the agent only needed to collect diamonds. The agent will also have to learn to avoid the zombie as it picks up diamonds. If it gets near a zombie it will receive a penalty score. If it gets touched by the zombie, the agent will "die" and received a larger penalty score. Thus, the agent will have to learn to maneuver itself with this in mind. It will be interesting to see if the agent will develop similar strategies to collect diamonds compared to how a human might perform. 
+</p>
+
+<p>We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.</p>
 
 #### Environement Setup
-<p>We made some changes to the environment since the proposal. Because the agent is enclosed with walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
+<p>Comapared to the previous version of the map in the status report, we made some changes to the environment. Because the agent is enclosed by walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
 
 #### Environment
 - Enclosed 21 x 21 Map
 - 31 Diamonds
-- Zombie spawned in 3 random locations on the map
+- Zombie spawned randomly in one of three locations on the map. 
 
-
+##### Below is the layout of Map 1 
 <img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
 #### Rewards
 We defined the following rewards:
 - Collecting Diamond +1
 - Near Zombie -1
-- Touched by Zombie -5
+- Touched/damaged by Zombie -5
 - Touching wall -10
 - Collecting all diamonds +100
 
 
 <H2 align=left>Approach</H2>
+
+<p>Our minecraft agent was developed on Malmo. We implemented and trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
 #### Algorithm Used: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used RLlib's implementation of a PPO trainer.
@@ -105,8 +114,9 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 
 ## PPO Map 1
 
-<img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="500" height="400">
+<img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="600" height="400">
 
+<p>Map 1 is basic maze with one path that goes around the maze and is the baseline for our experiments.  </p>
 
 <img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="700" height="500">
 
@@ -124,7 +134,7 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 
 ## PPO Map 2
 
-<img src="https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png" width="500" height="400">
+<img src="https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png" width="600" height="400">
 
 
 <p>We also tested our model on a map where the agent has multiple path options available. There are now 38 diamonds for the agent to collect.</p> 
