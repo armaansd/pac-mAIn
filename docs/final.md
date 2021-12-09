@@ -44,7 +44,7 @@ This will be exchanged for final vid later
 
 
 ##### Below is the layout of Map 1 
-<img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="500" height="500">
+<img src="https://user-images.githubusercontent.com/75513952/144721262-77b532d9-a85a-4b08-8b9a-ee5a24c4e50a.png" width="700" height="500">
 
 ### Rewards
 We defined the following rewards:
@@ -66,7 +66,7 @@ PPO is a on-policy algorithm, meaning that it explores by sampling actions based
 
 RLlib PPO uses the update function:
 
-<img src="https://user-images.githubusercontent.com/75513952/145362188-1b81a847-4180-459c-9f78-527ced00c5c5.png" width="700" height="25">
+<img src="https://user-images.githubusercontent.com/75513952/145362188-1b81a847-4180-459c-9f78-527ced00c5c5.png" width="400" height="25">
 
 
 #### Observation Space
