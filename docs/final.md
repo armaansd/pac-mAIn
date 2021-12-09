@@ -64,9 +64,14 @@ We defined the following rewards:
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
 PPO is a on-policy algorithm, meaning that it explores by sampling actions based on its latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
-RLlib PPO uses the update function:
+PPO uses the update function:
 
 <img src="https://user-images.githubusercontent.com/75513952/145362880-df9c5a00-04a8-4de1-820c-b28acd98d030.png" width="500" height="50">
+
+where r(θ) is the ratio of the current policy and the old policy
+
+<img src="https://user-images.githubusercontent.com/75513952/145363405-8d41a536-864d-4d2d-9a68-feaf5c48e474.png" width="500" height="50">
+
 
 #### Observation Space
 <p>In our scenario, we used a 3 x 17 x 17 image shape for the observation. We utilized 3 channels: one each for diamond, zombie, and wall blocks. 
