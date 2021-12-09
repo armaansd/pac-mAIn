@@ -8,8 +8,6 @@ This will be exchanged for final vid later
 </iframe>
 
 
-<img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
-
 <H2 align = left>Project Summary</H2>
 
 ### Project background: 
@@ -24,6 +22,10 @@ This will be exchanged for final vid later
 </p>
 
 <p>We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.</p>
+
+<img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
+
+
 
 ### Environement Setup
 <p>Comapared to the previous version of the map in the status report, we made some changes to the environment. Because the agent is enclosed by walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
