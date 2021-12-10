@@ -148,6 +148,11 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 
 <p>Map 1 is basic maze with one path that goes around the maze and is the baseline for our experiments.  </p>
 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
+</iframe>
+
+
 <img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="700" height="500">
 
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
