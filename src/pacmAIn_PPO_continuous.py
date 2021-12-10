@@ -11,6 +11,7 @@
 
 # Currently no zombies 
 # Status: Testing item gathering only for now
+# Baseline
 
 try:
     from malmo import MalmoPython
