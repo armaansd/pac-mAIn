@@ -18,11 +18,8 @@ from __future__ import print_function
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # ------------------------------------------------------------------------------------------------
 
-# The "Cliff Walking" example using Q-learning.
-# From pages 148-150 of:
-# Richard S. Sutton and Andrews G. Barto
-# Reinforcement Learning, An Introduction
-# MIT Press, 1998
+# Pacman Q learning agent 
+
 
 from future import standard_library
 standard_library.install_aliases()
