@@ -24,7 +24,7 @@
 #
 # model learned with PPO 
 # Map is a 21 x 21 maze
-# 35 diamonds the agent needs to collect
+# 31 diamonds the agent needs to collect
 
 
 try:
