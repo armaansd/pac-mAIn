@@ -2,7 +2,9 @@
 # Malmo XML docs: https://docs.ray.io/en/latest/rllib.html
 
 # pacmAIn.py 
-#
+# This code was for the status report 
+# Final version of the agent is in PPO agent and Qlearning Agent src files
+
 # model learned with PPO 
 # Map is a 28 x 30 maze
 # 52 diamonds the agent needs to collect
