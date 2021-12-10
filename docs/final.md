@@ -169,13 +169,14 @@ At the start of training, the agent mostly performs random actions and collects 
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
 
-At the start of training, the agent mostly performs random actions, resulting it in running into walls and the zombie. This resulted in the agent receiving large negative rewards. Over time, the 
+At the start of training, the agent mostly performs random actions, resulting it in running into walls and the zombie. This resulted in the agent receiving large negative rewards. Over time, the number of rewards increase as the agent is able to collect more diamonds while avoiding the zombie. 
 
 
 ### Number of steps to find solution:
 
 <img src="https://user-images.githubusercontent.com/75513952/144727105-9adcead7-d67e-4a30-b8cb-9483b7f009c3.png" width="700" height="500">
 
+The following graph shows the number of steps it took to collect all diamonds. The total steps the agent is allowed to perform is 500 steps. Initially, the agent requires a lot of steps to reach the solution, with the maximum being 251 steps. Over time, the agent requires fewer steps to reach the solution, which the minimum number being 58 steps. The average amount of steps the agent performed was 101 steps, which is about 1/5th of the total steps the agent is allowed to perform. 
 
 ### Steps taken to reach solution
 - Max: 251
@@ -192,14 +193,17 @@ At the start of training, the agent mostly performs random actions, resulting it
 ### Number of diamonds collected: 
 <img src="https://user-images.githubusercontent.com/75513952/145306472-cb10c674-b634-40cc-8380-c3ca1614577e.png" width="700" height="500">
 
+We tested our model on map 2. Initially, the performance of the agent is unstable as it has not learned to explore the new path added to the map. Over time, the agent's performance becomes less unstable and is able to collect diamonds more consistently compared to at the start. 
 
 ### Returns:
 <img src="https://user-images.githubusercontent.com/75513952/145305836-7a6981e5-6811-4843-9ac9-293c8289a5a2.png" width="700" height="500">
 
+Likewise, the number of returns increases with time. 
 
 ### Number of steps to find solution:
 <img src="https://user-images.githubusercontent.com/75513952/145306318-938d5c17-acda-4f5d-b642-3881dbebe621.png" width="700" height="500">
 
+Similar to the analysis for Map 1, the number of steps the agent requires decreases with time, with the maximum number of steps being 493 and the minimum number of steps being 88. Since there is an extra path the agent has to explore, the agent has to perform more steps compared to Map 1. The total amount of steps allowed is still 500 steps. The average number of steps the agent required to reach the solution was 198, which is about 2/5ths the total allowed steps. 
 
 ### Steps taken to reach solution
 - Max: 493
@@ -216,12 +220,14 @@ Reviewing the total steps vs returns graph once more, we see a spike in the retu
 
 When the agent gets touched by a zombie and dies, the current mission will end. The graph indicates that over time, the agent is able to receive higher returns. Higher returns indicate that the agent is able to survive long enough to accumulate more rewards. Thus, our agent accomplishes the expected behaviour. 
 
-#### Below is a video of an example run where a solution is found.
+Below are videos demonstrating our agent performing the expected behavior.
+
+#### Below is a video of an example run where a solution is found on Map 1
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4lxwPoD3CQI" frameborder="0" allowfullscreen>
 </iframe>
 
-#### Below is a video of an example run where a solution is found.
+#### Below is a video of an example run where a solution is found on Map 2
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
 </iframe>
