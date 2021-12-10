@@ -61,7 +61,7 @@ Negative Rewards
 
 ### Approach 1: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
-PPO is a on-policy algorithm, meaning that it explores by sampling actions based on the latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on.</p>
+PPO is a on-policy algorithm, meaning that it explores by sampling actions based on the latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. PPO uses a on-policy update and clips the gradient descent step so learning is improved. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on. </p>
 
 PPO uses the update function:
 
@@ -133,14 +133,13 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <p>After updating the observation array, the distance between the agent and zombie are checked. If the agent and the zombie are within touching distance or has been attacked by the zombie, the agent is considered to be "dead" and the mission will end.</p>
 
 ### Approach 2: Q-Learning
-<p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed. It updates its q-table using the q-value estimate of the next state.</p>
+<p>Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed. It updates its q-table using the q-value estimate of the next state. We used a simple tabular approach to implement Q-Learning. </p>
 
 <img src="https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png" width="400" height="200">
 
 #### Updating q-table 
 
-We used the following code snippet to update the q-table with the estimate of the next state after each step. 
-This is computed by adding the old q-value with an estimate. 
+We used the following code snippet to update the q-table. This is computed by adding the old q-value with an estimate shown above in the diagram.  
 
 ```python 
 if self.training and self.prev_s is not None and self.prev_a is not None:
@@ -151,25 +150,29 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 
 <H2 align=left>Evaluation</H2>
 
+## PPO: Quantitative
+We generated three graphs to visualize and analyze the agent's performance over time. We will evaluate the number of diamonds the agent is able to collect, the total rewards, and the number of steps it takes to reach the solution (collect all diamonds).
+
 ## PPO Map 1
 
 <img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="600" height="400">
 
 <p>Map 1 is basic maze with one path that goes around the maze and is the baseline for our experiments.  </p>
 
-  
-  
-  
-#### Below is a video of an example run where a solution is found.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/4lxwPoD3CQI" frameborder="0" allowfullscreen>
-</iframe>
-
+### Number of diamonds collected: 
 <img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="700" height="500">
 
+At the start of training, the agent mostly performs random actions and collects only a few diamonds. As you can see on the graph, the number of diamonds the agent is able to collect increases over time.  
+
+### Returns:
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
-#### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
+
+At the start of training, the agent mostly performs random actions, resulting it in running into walls and the zombie. This resulted in the agent receiving large negative rewards. Over time, the 
+
+
+### Number of steps to find solution:
 
 <img src="https://user-images.githubusercontent.com/75513952/144727105-9adcead7-d67e-4a30-b8cb-9483b7f009c3.png" width="700" height="500">
 
@@ -185,23 +188,16 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 
 <p>We also tested our model on a map where the agent has multiple path options available. There are now 38 diamonds for the agent to collect.</p> 
 
-  
-  
-  
 
-#### Below is a video of an example run where a solution is found.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
-</iframe>
-
-
+### Number of diamonds collected: 
 <img src="https://user-images.githubusercontent.com/75513952/145306472-cb10c674-b634-40cc-8380-c3ca1614577e.png" width="700" height="500">
 
+
+### Returns:
 <img src="https://user-images.githubusercontent.com/75513952/145305836-7a6981e5-6811-4843-9ac9-293c8289a5a2.png" width="700" height="500">
 
 
-#### The following graph shows the steps for the episodes where the agent was able to collect all the diamonds 
-
+### Number of steps to find solution:
 <img src="https://user-images.githubusercontent.com/75513952/145306318-938d5c17-acda-4f5d-b642-3881dbebe621.png" width="700" height="500">
 
 
@@ -209,6 +205,36 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 - Max: 493
 - Min: 88
 - Avg: 198.5
+
+
+## PPO: Qualitative
+We will evaluate our agent's performance based on the expected behaviour: Avoiding walls and zombies. 
+
+<img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
+
+Reviewing the total steps vs returns graph once more, we see a spike in the returns around the 10,000 to 20,000 steps mark. Although the rewards are still negative, this indicates that with time, the agent has learned to avoid walls. Since touching walls results in the agent receiving -10 reward points, it accounts for most of the negative returns initially. After the 30,000 steps mark, the returns are mostly positive, which indicates that the agent has succesfully learned to avoid touching the walls. 
+
+When the agent gets touched by a zombie and dies, the current mission will end. The graph indicates that over time, the agent is able to receive higher returns. Higher returns indicate that the agent is able to survive long enough to accumulate more rewards. Thus, our agent accomplishes the expected behaviour. 
+
+#### Below is a video of an example run where a solution is found.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4lxwPoD3CQI" frameborder="0" allowfullscreen>
+</iframe>
+
+#### Below is a video of an example run where a solution is found.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
+</iframe>
+
+
+
+## Q-Learning
+
+<p> We found that our agent trained with Q-Learning performed poorly in our new environment. Due to the zombie being a moving entity, it made q-value entries involving player death not accurate. </p>
+
+### Qualitative
+<p>Although our agent learned to collect diamd </p>
+### Quantitative 
 
 
 <H2>Resources Used</H2>
