@@ -133,10 +133,9 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <p>After updating the observation array, the distance between the agent and zombie are checked. If the agent and the zombie are within touching distance or has been attacked by the zombie, the agent is considered to be "dead" and the mission will end.</p>
 
 ### Approach 2: Q-Learning
-<p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed.</p>
+<p>We also explored tabular Q-Learning. Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed. It updates its q-table using the q-value estimate of the next state.</p>
 
-![image](https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png)
-
+<img src="https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png" width="500" height="200">
 
 #### Updating q-table 
 
