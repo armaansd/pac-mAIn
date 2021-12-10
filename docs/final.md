@@ -147,11 +147,11 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="600" height="400">
 
 <p>Map 1 is basic maze with one path that goes around the maze and is the baseline for our experiments.  </p>
-<p>
+
   
   
   
-  Below is a video of an example run where a solution is found.</p>
+#### Below is a video of an example run where a solution is found.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4lxwPoD3CQI" frameborder="0" allowfullscreen>
 </iframe>
@@ -175,11 +175,12 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <img src="https://user-images.githubusercontent.com/75513952/145305404-5a4ba770-1269-4d3b-bc87-a33e9aaf0069.png" width="600" height="400">
 
 <p>We also tested our model on a map where the agent has multiple path options available. There are now 38 diamonds for the agent to collect.</p> 
-<p>
+
   
   
   
-  Below is a video of an example run where a solution is found.</p>
+
+#### Below is a video of an example run where a solution is found.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
 </iframe>
