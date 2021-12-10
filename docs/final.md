@@ -59,7 +59,7 @@ Negative Rewards
 <p>Our minecraft agent was developed on Malmo. We trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
 
-### Baseline Approach: PPO
+### Approach 1: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
 PPO is a on-policy algorithm, meaning that it explores by sampling actions based on the latest version of its policy. Essentially our agent learns from the actions it took with its current policy and then updates its policy in small batches and in multiple training steps. Initially the actions the agent will perform will be based on it's initial conditions and training procedure, but should get less random as more training goes on.</p>
 
@@ -138,6 +138,16 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 ![image](https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png)
 
 
+#### Updating q-table 
+
+We used the following code snippet to update the q-table with the estimate of the next state after each step. 
+This is computed by adding the old q-value with an estimate. 
+
+```python 
+if self.training and self.prev_s is not None and self.prev_a is not None:
+    old_q = self.q_table[self.prev_s][self.prev_a]
+    self.q_table[self.prev_s][self.prev_a] = old_q + self.alpha * (current_r + self.gamma * max(self.q_table[current_s]) - old_q)
+```
 
 
 <H2 align=left>Evaluation</H2>
