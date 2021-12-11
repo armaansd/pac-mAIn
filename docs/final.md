@@ -29,13 +29,14 @@ This will be exchanged for final vid later
 
 
 ### Environement Setup
-<p>Comapared to the previous version of the map in the status report, we made some changes to the environment. Because the agent is enclosed by walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
+<p>Compared to the previous version of the map in the status report, we made some changes to the environment. Because the agent is enclosed by walls, one behavior it learned was to not move to minimize the amount of negative rewards that it receives from touching the wall. Thus, it learned to stand around instead of exploring the maze. To encourage the agent to explore, we added more walking space for the agent. This also allows it to maneuver around a Zombie if it learns to do so. </p>
 
 ### Environment
+```python
 - Enclosed 21 x 21 Map
 - 31 Diamonds
 - Zombie spawned randomly in one of three locations on the map. 
-
+```
 
 
 ##### Below is the layout of Map 1 
