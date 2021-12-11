@@ -140,11 +140,18 @@ Q-Learning uses the following equation to update its table where Q(S, A) is the 
 
 <img src="https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png" width="400" height="200">
 
-- alpha: Learning rate
-- R: reward
-- gamma: discount factor
+- alpha: Learning rate 
+- R: reward 
+- gamma: discount factor 
 - Q(S, A): old value
 - Q(S', a'): Estimate of optimal future value
+
+We used the following:
+```python
+agent_host.addOptionalFloatArgument('alpha','Learning rate of the Q-learning agent.', 0.1)
+agent_host.addOptionalFloatArgument('epsilon','Exploration rate of the Q-learning agent.', 0.01)
+agent_host.addOptionalFloatArgument('gamma', 'Discount factor.', 1.0)
+```
 
 #### Updating q-table 
 
