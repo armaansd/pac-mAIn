@@ -291,4 +291,5 @@ Overall, tabular Q-Learning is limited and could be improved upon in conjunction
 - [RLlib PPO documentation](https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo)
 - [Guide to Q-Learning](https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c)
 - [Intro to PPO](https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d)
+- [OpenAI overview of PPO](https://spinningup.openai.com/en/latest/algorithms/ppo.html#proximal-policy-optimization)
 - [Lecture Video on Q-Learning](https://canvas.eee.uci.edu/courses/34142/pages/week-2-video-8-q-learning?module_item_id=1102962)
