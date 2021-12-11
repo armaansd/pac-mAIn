@@ -286,7 +286,8 @@ Overall, tabular Q-Learning is limited and could be improved upon in conjunction
 <H2>Resources Used</H2>
 
 - [Malmo Schema](https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html)
-- [Python Examples on Malmo](https://microsoft.github.io/malmo/0.14.0/Python_Examples/Tutorial.pdf)
+- [Malmo Tutorial](https://microsoft.github.io/malmo/0.14.0/Python_Examples/Tutorial.pdf)
+- [Malmo Python Examples](https://github.com/Microsoft/malmo/tree/master/Malmo/samples/Python_examples)
 - [RLlib PPO documentation](https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo)
 - [Guide to Q-Learning](https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c)
 - [Intro to PPO](https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d)
