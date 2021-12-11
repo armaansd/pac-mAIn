@@ -164,7 +164,7 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 ```
 
 #### Q-table being filled at the start
-<img src="https://user-images.githubusercontent.com/75513952/145655718-523fe51d-6d58-4d93-98d8-0459fe9f6794.JPG" width="200" height="200">
+<img src="https://user-images.githubusercontent.com/75513952/145655718-523fe51d-6d58-4d93-98d8-0459fe9f6794.JPG" width="400" height="400">
 
 
 <H2 align=left>Evaluation</H2>
