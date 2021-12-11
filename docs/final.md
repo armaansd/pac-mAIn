@@ -146,7 +146,7 @@ Q-Learning uses the following equation to update its table where Q(S, A) is the 
 - Q(S, A): old value
 - Q(S', a'): Estimate of optimal future value
 
-We used the following:
+- We used the following arguments:
 ```python
 agent_host.addOptionalFloatArgument('alpha','Learning rate of the Q-learning agent.', 0.1)
 agent_host.addOptionalFloatArgument('epsilon','Exploration rate of the Q-learning agent.', 0.01)
