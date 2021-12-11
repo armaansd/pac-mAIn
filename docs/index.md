@@ -4,12 +4,11 @@ title:  Home
 ---
 
 # PROJECT SUMMARY
+The goal of our project is to train our agent to play a modified version of Pac-Man on Minecraft. We will develop our AI using the Malmo platform. The agent will be placed in a maze to explore. The pellets from the original game will be substituted with diamonds and the ghosts will be substituted by a Zombie. The agent's score will be based on how many diamonds they collect in a given episode. The agent will "win" if it is able to collect all diamonds.
 
-<p>The goal of our project is to train our agent to play a modified Mincraft recreation of the game Pac-Man. The goal of our agent is to get as many points as possible before time runs out (500 steps). The agent will be placed in a 21 x 21 enclosed maze and will have to traverse the map in order to pick up diamonds located around the maze. There will be a total of 35 diamonds for the agent to collect. The agent's score will be based on how many diamonds they collect in a given episode. We will develop our AI using Malmo. </p>
+Of course, this project would be trivial if the agent only needed to collect diamonds. The agent will also have to learn to avoid the zombie as it picks up diamonds. If it gets near a zombie it will receive a penalty score. If it gets touched by the zombie, the agent will "die" and received a larger penalty score. Thus, the agent will have to learn to maneuver itself with this in mind. Because the position of the zombie changes over time and the diamonds disappear when they are collected, ML and/or RL algorithms can help the agent make reasonable actions in an environment with dynamic entities. It will be interesting to see if our agent will develop strategies for collecting diamonds similar to how a human might do.
 
-<p>In this maze will also include a zombie, replacing the ghost in the original Pac-Man game. The agent will have to learn to avoid the zombie as it picks up diamonds. If it encounters a zombie and touches it, it will receive a penalty score.</p>
-
-<p>The goal of this project is to implement the environment ourselves and implement and compare more than one algorithm. </p>
+We will create the environment ourselves and train our agent using two different approaches. We will then evaluate our agent based on several metrics.
 
 
 <img src="https://user-images.githubusercontent.com/75513952/144721188-2a29f8d2-261c-4e87-98e4-140f43b1356b.png" width="1000" height="700">
@@ -29,13 +28,6 @@ title:  Home
 ## Algorithms We Will Explore
 - PPO
 - Tabular Q-Learning
-
-## Resources Used 
-
-- <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
-- <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>   
-- <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>    
-- <https://minecraft-archive.fandom.com/wiki/Blocks>
 
 
 [quickref]: https://github.com/mundimark/quickrefs/blob/master/HTML.md
