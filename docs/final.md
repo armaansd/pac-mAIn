@@ -62,7 +62,7 @@ Negative Rewards
 <p>The main advantage of PPO is that it tends to directly optimize for policy, which might be more stable for our scenario. Q-learning methods learn an action-value function approximation, which might be unstable for our scenario since it involves moving entities and large number of states. However, a disadvantage of PPO is that it may get trapped in local minima/maxima, such as when exploiting vs exploring. On the other hand, Q-Learning needs more data and may take more time to learn in our environment. We expect PPO to perform better in our experiments.</p>
 
 ### Baseline:
-<p>Our agent is our agent from the status report. The agent is simply given +1 reward for collecting diamonds. Before training, the agent the agent mostly performs random actions, often running into the walls and into the zombie. It is not good at collecting diamonds either.</p>
+<p>Our baseline is our agent from the status report. The agent is simply given +1 reward for collecting diamonds. Before training, the agent the agent mostly performs random actions, often running into the walls and into the zombie. It is not good at collecting diamonds either.</p>
 
 ### Approach 1: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
