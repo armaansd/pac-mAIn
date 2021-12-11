@@ -285,10 +285,9 @@ Overall, tabular Q-Learning is limited and could be improved upon in conjunction
 
 <H2>Resources Used</H2>
 
-- <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
-- <https://microsoft.github.io/malmo/0.14.0/Python_Examples/Tutorial.pdf>
-- <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>    
-- <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>   
-- <https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c>
-- <https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d>
-- <https://canvas.eee.uci.edu/courses/34142/pages/week-2-video-8-q-learning?module_item_id=1102962>
+-[Malmo Schema](https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html)
+- [Python Examples on Malmo](https://microsoft.github.io/malmo/0.14.0/Python_Examples/Tutorial.pdf)
+- [RLlib PPO documentation](https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo)
+- [Guide to Q-Learning](https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c)
+- [Intro to PPO](https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d)
+- [Lecture Video on Q-Learning](https://canvas.eee.uci.edu/courses/34142/pages/week-2-video-8-q-learning?module_item_id=1102962)
