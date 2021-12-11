@@ -53,8 +53,7 @@ Negative Rewards
 - Touched/damaged by Zombie -5
 - Touching wall -10
 
-####
-####
+
 
 <H2 align=left>Approach</H2>
 
@@ -135,7 +134,9 @@ index = math.floor((self.obs_size**2)/2) + math.floor(X-x) + math.floor(Z-z) * s
 <p>After updating the observation array, the distance between the agent and zombie are checked. If the agent and the zombie are within touching distance or has been attacked by the zombie, the agent is considered to be "dead" and the mission will end.</p>
 
 ### Approach 2: Q-Learning
-<p>Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, on-policy algorithms find the optimal action-value function without depending on the policy being followed. It updates its q-table using the q-value estimate of the next state. We used a simple tabular approach to implement Q-Learning. </p>
+<p>Q-Learning is an off-policy algorithm, meaning the updated policy is different from the behavior policy. Unlike an on-policy algorithm, off-policy algorithms learn the value of the optimal policy independently of the agent’s actions. It updates its q-table using the q-value estimate of the next state. We used a simple tabular approach to implement Q-Learning. </p>
+
+Q-Learning uses the following equation to update its table where Q(S, A) is the expected value of performing action a in state s
 
 <img src="https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png" width="400" height="200">
 
@@ -152,8 +153,6 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 #### Q-table being filled at the start
 <img src="https://user-images.githubusercontent.com/75513952/145655718-523fe51d-6d58-4d93-98d8-0459fe9f6794.JPG" width="200" height="200">
 
-####
-####
 
 <H2 align=left>Evaluation</H2>
 
@@ -241,12 +240,12 @@ Below are videos demonstrating our agent performing the expected behavior.
 
 
 
-## Q-Learning
+## Evaluation: Q-Learning
 
 <p> We found that our agent trained with Q-Learning performed poorly in our new environment. Due to the zombie being a moving entity, it made q-value entries involving player death not accurate. </p>
 
 ### Qualitative
-<p>Although our agent learned to collect diamd </p>
+<p>Compared to PPO, Q-Learning took longer for the agent to reach a solution (collect all diamonds). We assume its due </p>
 ### Quantitative 
 
 
