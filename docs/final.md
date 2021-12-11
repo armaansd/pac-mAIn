@@ -252,10 +252,10 @@ As shown in the demonstrations, the agent is adept at collecting diamonds. When 
 <p> We found that our agent trained with tabular Q-Learning performed poorly in our new environment. A major limitation of tabular Q-learning is that it applies only to discrete action and state spaces. Due to the zombie being a moving entity, it made q-value entries involving player death inaccurate and resulted in inefficient learning. </p>
 
 ### Qualitative
-<p>Compared to PPO, was unable to effectively learn to avoid the zombie while collecting diamonds.</p>
+<p>Compared to PPO, the agent trained with tabular Q-Learning was unable to effectively learn to avoid the zombie while collecting diamonds.</p>
 
 ### Quantitative 
-<p>Compared to PPO, Q-Learning took longer for the agent to reach a solution (collect all diamonds).</p>
+<p>Compared to PPO, the agent trained with Q-Learning took longer to reach a solution (collect all diamonds).</p>
 
 
 <H2>Resources Used</H2>
