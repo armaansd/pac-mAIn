@@ -140,6 +140,12 @@ Q-Learning uses the following equation to update its table where Q(S, A) is the 
 
 <img src="https://user-images.githubusercontent.com/75513952/145320504-4b8fa938-7b7d-494e-a9d9-2ea53c108fcd.png" width="400" height="200">
 
+- alpha: Learning rate
+- R: reward
+- gamma: discount factor
+- Q(S, A): old value
+- Q(S', a'): Estimate of optimal future value
+
 #### Updating q-table 
 
 We used the following code snippet to update the q-table. This is computed by adding the old q-value with an estimate shown above in the diagram.  
@@ -238,15 +244,18 @@ Below are videos demonstrating our agent performing the expected behavior.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
 </iframe>
 
+As shown in the demonstrations, the agent is adept at collecting diamonds. When the agent observes a nearby zombie, it will avoid it. 
 
 
 ## Evaluation: Q-Learning
 
-<p> We found that our agent trained with Q-Learning performed poorly in our new environment. Due to the zombie being a moving entity, it made q-value entries involving player death not accurate. </p>
+<p> We found that our agent trained with tabular Q-Learning performed poorly in our new environment. A major limitation of tabular Q-learning is that it applies only to discrete action and state spaces. Due to the zombie being a moving entity, it made q-value entries involving player death inaccurate and resulted in inefficient learning. </p>
 
 ### Qualitative
-<p>Compared to PPO, Q-Learning took longer for the agent to reach a solution (collect all diamonds). We assume its due </p>
+<p>Compared to PPO, was unable to effectively learn to avoid the zombie while collecting diamonds.</p>
+
 ### Quantitative 
+<p>Compared to PPO, Q-Learning took longer for the agent to reach a solution (collect all diamonds).</p>
 
 
 <H2>Resources Used</H2>
@@ -255,5 +264,5 @@ Below are videos demonstrating our agent performing the expected behavior.
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>    
 - <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>   
 - <https://minecraft-archive.fandom.com/wiki/Blocks>    
-- <https://towardsdatascience.com/on-policy-v-s-off-policy-learning-75089916bc2f#:~:text=On%2DPolicy%20learning%20algorithms%20are,already%20using%20for%20action%20selection.>
+- <https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c>
 - <https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d>
