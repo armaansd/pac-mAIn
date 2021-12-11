@@ -60,6 +60,10 @@ Negative Rewards
 
 <p>Our minecraft agent was developed on Malmo. We trained on two different reinforcement learning algorithms. We wanted to explore on-policy and off-policy algorithms, so we decicded to train one agent using Proximal Policy Optimization (on-policy) and train another using Q-Learning (off-policy).</p>
 
+<p>The main advantage of PPO is that it tends to directly optimize for policy, which might be more stable for our scenario. Q-learning methods learn an action-value function approximation, which might be unstable for our scenario since it involves moving entities and large number of states. However, a disadvantage of PPO is that it may get trapped in local minima/maxima, such as when exploiting vs exploring. On the other hand, Q-Learning needs more data and may take more time to learn in our environment. We expect PPO to perform better in our experiments.</p>
+
+### Baseline:
+<p>Before training, the agent is moving around randomly, often running into the walls and into the zombie. It is not good at collecting diamonds either.</p>
 
 ### Approach 1: PPO
 <p>One of the algorithms we used is Proximal Policy Optimization or PPO for short. We used the pre-implemented version of the PPO algorithm trainer from RLlib.
@@ -180,32 +184,32 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
 <H2 align=left>Evaluation</H2>
 
 ## PPO: Quantitative
-We generated three graphs to visualize and analyze the agent's performance over time. We will evaluate the number of diamonds the agent is able to collect, the total rewards, and the number of steps it takes to reach the solution (collect all diamonds).
+We generated three graphs to visualize and analyze the agent's performance over time. We will evaluate the number of diamonds the agent is able to collect, the total rewards, and the number of steps it takes to reach the solution (collect all diamonds). Overall, all of these metrics should improve with time. One constraint we enforced on our agent is that the maximum number of steps it can perform is 500.
 
 ## PPO Map 1
 
 <img src="https://user-images.githubusercontent.com/75513952/145304596-c8dda948-edbd-4c0b-b956-f034a6577d72.png" width="600" height="400">
 
-<p>Map 1 is basic maze with one path that goes around the maze and is the baseline for our experiments.  </p>
+<p>Map 1 is basic maze with one path that goes around the maze.  </p>
 
 
 ### Number of diamonds collected: 
 <img src="https://user-images.githubusercontent.com/75513952/144725745-ccee522c-9d18-45be-944f-c720c258fd6d.png" width="700" height="500">
 
-At the start of training, the agent mostly performs random actions and collects only a few diamonds. As you can see on the graph, the number of diamonds the agent is able to collect increases over time.  
+At the start of training, the agent mostly performs random actions and collects only a few diamonds. As indicated on the graph, the number of diamonds the agent is able to collect increases over time. As the agent's score is based off the number of diamonds it collects, the agent should be able to collect more diamonds as more training goes on. The graph is a good indication of improvement as the agent is able to increase the number of diamonds it can collect over time. 
 
 ### Returns:
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
 
-At the start of training, the agent mostly performs random actions, resulting it in running into walls and the zombie. This resulted in the agent receiving large negative rewards. Over time, the number of rewards increase as the agent is able to collect more diamonds while avoiding the zombie. 
+At the start of training, the agent mostly performs random actions, resulting it in running into walls and the zombie. This resulted in the agent receiving large negative rewards. Over time, the rewards increase as the agent is able to collect more diamonds while avoiding the zombie. As indicated on the graph, the agent progresses from mostly negative rewards to mostly positive rewards. This is a good indication of improvement as the agent should be able to receive higher rewards the longer it stays alive. 
 
 
 ### Number of steps to find solution:
 
 <img src="https://user-images.githubusercontent.com/75513952/144727105-9adcead7-d67e-4a30-b8cb-9483b7f009c3.png" width="700" height="500">
 
-The following graph shows the number of steps it took to collect all diamonds. The total steps the agent is allowed to perform is 500 steps. Initially, the agent requires a lot of steps to reach the solution, with the maximum being 251 steps. Over time, the agent requires fewer steps to reach the solution, which the minimum number being 58 steps. The average amount of steps the agent performed was 101 steps, which is about 1/5th of the total steps the agent is allowed to perform. 
+The following graph shows the number of steps it took to collect all diamonds. The total steps the agent is allowed to perform is 500 steps. Initially, the agent requires a lot of steps to reach the solution, with the maximum being 251 steps. Over time, the agent requires fewer steps to reach the solution, with the minimum number being 58 steps. The average amount of steps the agent performed was 101 steps, which is about 1/5th of the total steps the agent is allowed to perform. 
 
 ### Steps taken to reach solution
 - Max: 251
@@ -241,7 +245,7 @@ Similar to the analysis for Map 1, the number of steps the agent requires decrea
 
 
 ## PPO: Qualitative
-We will evaluate our agent's performance based on the expected behaviour: Avoiding walls and zombies. 
+We will evaluate our agent's performance based on the expected behaviours: Avoiding walls and zombies. The agent should remain adept at collecting diamonds while performing the expected behaviors and should not be negatively impacted by them. 
 
 <img src="https://user-images.githubusercontent.com/75513952/144725748-c2ff28ba-ec1f-45ad-a989-a56317c25a6c.png" width="700" height="500">
 
@@ -261,13 +265,13 @@ Below are videos demonstrating our agent performing the expected behavior.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/co5hQgN6pi8" frameborder="0" allowfullscreen>
 </iframe>
 
-As shown in the demonstrations, the agent is adept at collecting diamonds. When the agent observes a nearby zombie, it will avoid it. 
+As shown in the demonstrations, the agent is adept at collecting diamonds. When the agent observes a nearby zombie, it will avoid it. This behavior does not negatively impact the agent's ability to collect diamonds, so our agent also accomplishes this expected behavior. 
 
 
 ## Evaluation: Q-Learning
 
 ### Quantitative 
-<p>Compared to PPO, the agent trained with Q-Learning took longer to reach a solution (collect all diamonds).</p>
+<p>Overall, the agent trained with Q-Learning took longer to reach a solution (collect all diamonds). As the number of runs increased, our agent's performance did not show significant improvement. This might be due to the large number of states or the inaccuracies of q-table entries due to the agent dying to a moving zombie.</p>
 
 ### Qualitative
 <p>Compared to PPO, the agent trained with tabular Q-Learning was unable to effectively learn to avoid the zombie while collecting diamonds. Its performance was unstable and performed poorly in our new environment. A major limitation of tabular Q-learning is that it applies only to discrete action and state spaces. Due to the zombie being a moving entity, it made q-value entries involving player death inaccurate and resulted in inefficient learning. Thus, the agent trained under Q-Learning did not accomplish the expected behavior of avoiding zombies.</p>
@@ -278,13 +282,14 @@ As shown in the demonstrations, the agent is adept at collecting diamonds. When 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/R2OfQQSMz48" frameborder="0" allowfullscreen>
 </iframe>
 
-
+Overall, tabular Q-Learning is limited and could be improved upon in conjunction with other models. 
 
 <H2>Resources Used</H2>
 
 - <https://microsoft.github.io/malmo/0.14.0/Schemas/Mission.html>
+- <https://microsoft.github.io/malmo/0.14.0/Python_Examples/Tutorial.pdf>
 - <https://docs.ray.io/en/master/rllib-algorithms.html#proximal-policy-optimization-ppo>    
 - <https://github.com/ray-project/ray/blob/master/rllib/agents/ppo/ppo.py>   
-- <https://minecraft-archive.fandom.com/wiki/Blocks>    
 - <https://towardsdatascience.com/a-beginners-guide-to-q-learning-c3e2a30a653c>
 - <https://medium.com/intro-to-artificial-intelligence/proximal-policy-optimization-ppo-a-policy-based-reinforcement-learning-algorithm-3cf126a7562d>
+- <https://canvas.eee.uci.edu/courses/34142/pages/week-2-video-8-q-learning?module_item_id=1102962>
