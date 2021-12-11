@@ -152,6 +152,10 @@ agent_host.addOptionalFloatArgument('alpha','Learning rate of the Q-learning age
 agent_host.addOptionalFloatArgument('epsilon','Exploration rate of the Q-learning agent.', 0.01)
 agent_host.addOptionalFloatArgument('gamma', 'Discount factor.', 1.0)
 ```
+- We used discrete actions and defined the action space as follows: 
+```python
+actionSet = ["movenorth 1", "movesouth 1", "movewest 1", "moveeast 1"]
+```
 
 #### Updating q-table 
 
@@ -163,8 +167,11 @@ if self.training and self.prev_s is not None and self.prev_a is not None:
     self.q_table[self.prev_s][self.prev_a] = old_q + self.alpha * (current_r + self.gamma * max(self.q_table[current_s]) - old_q)
 ```
 
-#### Q-table being filled at the start
-<img src="https://user-images.githubusercontent.com/75513952/145655718-523fe51d-6d58-4d93-98d8-0459fe9f6794.JPG" width="400" height="400">
+- Q-table being filled at the start
+<img src="https://user-images.githubusercontent.com/75513952/145655718-523fe51d-6d58-4d93-98d8-0459fe9f6794.JPG" width="500" height="500">
+
+- Q-table after agent explores the map
+<img src="https://user-images.githubusercontent.com/75513952/145660663-e091b3cb-c2ee-4684-a166-0aa67bd70d77.JPG" width="500" height="500">
 
 
 <H2 align=left>Evaluation</H2>
@@ -256,13 +263,18 @@ As shown in the demonstrations, the agent is adept at collecting diamonds. When 
 
 ## Evaluation: Q-Learning
 
-<p> We found that our agent trained with tabular Q-Learning performed poorly in our new environment. A major limitation of tabular Q-learning is that it applies only to discrete action and state spaces. Due to the zombie being a moving entity, it made q-value entries involving player death inaccurate and resulted in inefficient learning. </p>
-
-### Qualitative
-<p>Compared to PPO, the agent trained with tabular Q-Learning was unable to effectively learn to avoid the zombie while collecting diamonds.</p>
-
 ### Quantitative 
 <p>Compared to PPO, the agent trained with Q-Learning took longer to reach a solution (collect all diamonds).</p>
+
+### Qualitative
+<p>Compared to PPO, the agent trained with tabular Q-Learning was unable to effectively learn to avoid the zombie while collecting diamonds. Its performance was unstable and performed poorly in our new environment. A major limitation of tabular Q-learning is that it applies only to discrete action and state spaces. Due to the zombie being a moving entity, it made q-value entries involving player death inaccurate and resulted in inefficient learning. Thus, the agent trained under Q-Learning did not accomplish the expected behavior of avoiding zombies.</p>
+
+<p>Nevertheless, the agent was able to collect all the diamonds on the map within 500 steps in a map with no zombie.</p>
+
+#### Below is a video of an example run where a solution is found
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R2OfQQSMz48" frameborder="0" allowfullscreen>
+</iframe>
+
 
 
 <H2>Resources Used</H2>
